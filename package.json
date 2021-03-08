@@ -1,0 +1,16 @@
+{
+  "name": "bibliotek",
+  "version": "1.0.0",
+  "description": "Project 2 for CS 313",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jessica Ingebrigtsen",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "pg": "^8.5.1"
+  }
+}
