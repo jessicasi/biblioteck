@@ -5,7 +5,7 @@ const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({connectionString: connectionString});
 
-var sql = "SELECT * FROM some_table_here";
+var sql = "SELECT * FROM testing";
 
 pool.query(sql, function(err, result) {
     // If an error occurred...
