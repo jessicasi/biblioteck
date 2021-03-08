@@ -1,11 +1,12 @@
 const { Pool } = require('pg');
+
 require('dotenv').config();
 
 const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({connectionString: connectionString});
-
-var sql = "SELECT * FROM testing";
+console.log(process.env.DATABASE_URL);
+var sql = "SELECT * FROM public.testing";
 
 pool.query(sql, function(err, result) {
     // If an error occurred...
