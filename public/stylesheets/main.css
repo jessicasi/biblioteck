@@ -1,3 +1,14 @@
-h1::before {
-    content: url(../images/main-book.png);
+.layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.bookhalf{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.moviehalf {
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
