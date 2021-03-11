@@ -1,44 +1,76 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <%- include ("../partials/header.ejs") %>
-  </head>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
 
-  <body>
+<body>
 
-    <%- include ("../partials/nav.ejs") %>
+  <%- include ("../partials/nav.ejs") %>
 
-    <div class="container">
-      <h1 class="text-center">Bibliotek</h1>
-      <div class="layout">
+  <div class="container">
+    <h1 class="text-center">Bibliotek</h1>
+    <form action="/filter" method="get">
+      <label>Filter by Genre</label>
+      <select class="form-control" name="genreFilter">
+        <% for(var i=0; i < dropdown.length; i++) { %>
+        <option value="<%= dropdown[i] %>"><%= dropdown[i] %></option>
+        <% }
+        %>
+      </select>
+      <input type="submit" name="filter-btn" value="Filter Books"> 
+      <input type="submit" name="filter-btn" value="Filter Movies">
+    </form>
+    <form>
+      <p>Or view all</p>
+      <button class="text-center" name="view-btn" value="View Al Books" onclick="getBooks()">View All Books</button>
+      <button class="text-center" name="view-btn" value="View All Movies" onclick="getMovies()">View All Movies</button>
+    </form>
+
+  </div>
+  <!--     <div class="layout">
       <div class="bookhalf">
         <h2 class="text-center">Books</h2>
         <button class="text-center" name="book-btn" value="View Books" onclick="getBooks()">View All Books</button>
-        <p>Filter by Genre</p>
         <form>
-        
+          <label>Filter by Genre</label>
+          <select class="form-control" id="sel1">
+            <% for(var i=0; i < dropdown.length; i++) { %>
+            <option><%= dropdown[i] %></option>
+            <% }
+            %>
+          </select>
         </form>
-      </div>
-      <!--End of Book Half-->
-      <div class="moviehalf">
+      </div> -->
+  <!--End of Book Half-->
+  <!--    <div class="moviehalf">
         <h2 class="text-center">Movies</h2>
         <button class="text-center" name="book-btn" value="View Books" onclick="getMovies()">View All Movies</button>
+        <form>
+          <label>Filter by Genre</label>
+          <select class="form-control" id="sel1">
+            <% for(var i=0; i < dropdown.length; i++) { %>
+            <option><%= dropdown[i] %></option>
+            <% }
+            %>
+          </select>
+        </form>
       </div>
 
-    </div>
-    <!--End of Layout-->
-<div class="addNew">
-<form>
+    </div> -->
+  <!--End of Layout-->
+  <div class="addNew">
+    <form>
 
-</form>
+    </form>
 
-</div>
+  </div>
 
 
   </div>
   <!--End of Container-->
 
-  </body>
+</body>
 
 </html>
