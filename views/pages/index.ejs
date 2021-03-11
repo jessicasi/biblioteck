@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%- include ("../partials/header.ejs") %>
-</head>
 
-<body>
+  <head>
+    <%- include ("../partials/header.ejs") %>
+  </head>
 
-  <%- include ("../partials/nav.ejs") %>
+  <body>
 
-  <div class="container">
-    <h1 class="text-center">Bibliotek</h1>
-    <div class="layout">
+    <%- include ("../partials/nav.ejs") %>
+
+    <div class="container">
+      <h1 class="text-center">Bibliotek</h1>
+      <div class="layout">
       <div class="bookhalf">
-      <h2 class="text-center">Books</h2>
-    <button class="text-center" name="book-btn" value="View Books" onclick="getBooks()">View All Books</button>
-    </div><!--End of Book Half-->
-    <div class="moviehalf">
-      <h2 class="text-center">Movies</h2>
-      <button class="text-center" name="book-btn" value="View Books" onclick="getMovies()">View All Movies</button>
+        <h2 class="text-center">Books</h2>
+        <button class="text-center" name="book-btn" value="View Books" onclick="getBooks()">View All Books</button>
+        <p>Filter by Genre</p>
+        <form>
+        
+        </form>
+      </div>
+      <!--End of Book Half-->
+      <div class="moviehalf">
+        <h2 class="text-center">Movies</h2>
+        <button class="text-center" name="book-btn" value="View Books" onclick="getMovies()">View All Movies</button>
+      </div>
+
     </div>
+    <!--End of Layout-->
+<div class="addNew">
+<form>
 
-    </div><!--End of Layout-->
-   
+</form>
+
+</div>
 
 
-  </div><!--End of Container-->
+  </div>
+  <!--End of Container-->
 
-</body>
+  </body>
+
 </html>

@@ -6,21 +6,20 @@ CREATE TABLE movie
 );
 
 
-ALTER TABLE book
+ALTER TABLE movie
 
-ADD COLUMN genre_id INT;
-
+    ADD COLUMN genre_id INT,
+    ADD COLUMN image_id INT,
     ADD COLUMN series_id INT,
     ADD COLUMN review_id INT,
     ADD COLUMN location_id INT;
 
-ALTER TABLE book
-ADD CONSTRAINT fk_genre_id FOREIGN KEY (genre_id) references genre(genre_id);
-
-
-    ADD CONSTRAINT fk_series_id FOREIGN KEY (series_id) references series(series_id),
-    ADD CONSTRAINT fk_review_id FOREIGN KEY (review_id) references review(review_id),
-    ADD CONSTRAINT fk_location_id FOREIGN KEY (location_id) references location(location_id);
+ALTER TABLE movie
+ADD CONSTRAINT fk_genre_id FOREIGN KEY (genre_id) references genre(genre_id),
+ADD CONSTRAINT fk_image_id FOREIGN KEY (image_id) references image(image_id),
+ADD CONSTRAINT fk_series_id FOREIGN KEY (series_id) references series(series_id),
+ADD CONSTRAINT fk_review_id FOREIGN KEY (review_id) references review(review_id),
+ADD CONSTRAINT fk_location_id FOREIGN KEY (location_id) references location(location_id);
 
 
 
@@ -34,7 +33,7 @@ CREATE TABLE book
 );
 
 ALTER TABLE book
-
+    ADD COLUMN image_id INT,
     ADD COLUMN series_id INT,
     ADD COLUMN review_id INT,
     ADD COLUMN location_id INT;
@@ -68,8 +67,7 @@ ADD CONSTRAINT fk_review_id FOREIGN KEY (review_id) references review(review_id)
 
 CREATE TABLE book_author
 (
-    ADD CONSTRAINT fk_book_id FOREIGN KEY (book_id) references book(book_id),
-    ADD CONSTRAINT fk_author_id FOREIGN KEY (author_id) references author(author_id);
+    
 );
 
 ALTER TABLE book_author
@@ -91,10 +89,6 @@ CREATE TABLE movie_book_genre
 (
     
 );
-
-movie_id INT references movie.movie_id,
-    book_id INT references book.book_id,
-    genre_id INT references genre.genre_id
 
 ALTER TABLE movie_book_genre
 
@@ -129,4 +123,10 @@ CREATE TABLE genre
 (
     genre_id serial NOT NULL Primary Key,
     genre_name VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE image (
+    image_id serial NOT NULL Primary Key,
+    image_name VARCHAR(100) NOT NULL,
+    image_path VARCHAR(100) NOT NULL
 );
