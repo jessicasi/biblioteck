@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+    <%- include ("../partials/nav.ejs") %>
+
+    <div class="container">
+
+        <h1>Filtered Books!</h1>
+
+        <%= books[0] %>
+        <!-- <ul>
+        <% for(var i=1; i <= books.length; i+2) { %>
+            <li><%= books[i] %></li>
+            <li><%= authors[i] %></li>
+            
+            <% }
+            %>
+        </ul> -->
+    </div>
+</body>
+
+</html>

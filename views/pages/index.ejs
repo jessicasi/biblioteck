@@ -11,7 +11,7 @@
 
   <div class="container">
     <h1 class="text-center">Bibliotek</h1>
-    <form action="/filter" method="get">
+    <form action="/filter" method="get" id="filterForm">
       <label>Filter by Genre</label>
       <select class="form-control" name="id">
         <% for(var i=0; i < dropdown.length; i++) { %>
@@ -19,7 +19,7 @@
         <% }
         %>
       </select>
-      <button class="text-center" name="filterType" value="book">Filter Books</button>
+      <button class="text-center" name="filterType" value="book" >Filter Books</button>
       <button class="text-center" name="filterType" value="movie">Filter Movies</button>
 
     </form>
@@ -30,47 +30,9 @@
     </form>
 
   </div>
-  <!--     <div class="layout">
-      <div class="bookhalf">
-        <h2 class="text-center">Books</h2>
-        <button class="text-center" name="book-btn" value="View Books" onclick="getBooks()">View All Books</button>
-        <form>
-          <label>Filter by Genre</label>
-          <select class="form-control" id="sel1">
-            <% for(var i=0; i < dropdown.length; i++) { %>
-            <option><%= dropdown[i] %></option>
-            <% }
-            %>
-          </select>
-        </form>
-      </div> -->
-  <!--End of Book Half-->
-  <!--    <div class="moviehalf">
-        <h2 class="text-center">Movies</h2>
-        <button class="text-center" name="book-btn" value="View Books" onclick="getMovies()">View All Movies</button>
-        <form>
-          <label>Filter by Genre</label>
-          <select class="form-control" id="sel1">
-            <% for(var i=0; i < dropdown.length; i++) { %>
-            <option><%= dropdown[i] %></option>
-            <% }
-            %>
-          </select>
-        </form>
-      </div>
-
-    </div> -->
-  <!--End of Layout-->
-  <div class="addNew">
-    <form>
-
-    </form>
+  <div id="result">
 
   </div>
-
-
-  </div>
-  <!--End of Container-->
 
 </body>
 
