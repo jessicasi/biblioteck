@@ -13,19 +13,20 @@
     <h1 class="text-center">Bibliotek</h1>
     <form action="/filter" method="get">
       <label>Filter by Genre</label>
-      <select class="form-control" name="genreFilter">
+      <select class="form-control" name="id">
         <% for(var i=0; i < dropdown.length; i++) { %>
-        <option value="<%= dropdown[i] %>"><%= dropdown[i] %></option>
+        <option value="<%= ids[i] %>"><%= dropdown[i] %></option>
         <% }
         %>
       </select>
-      <input type="submit" name="filter-btn" value="Filter Books"> 
-      <input type="submit" name="filter-btn" value="Filter Movies">
+      <button class="text-center" name="filterType" value="book">Filter Books</button>
+      <button class="text-center" name="filterType" value="movie">Filter Movies</button>
+
     </form>
     <form>
       <p>Or view all</p>
-      <button class="text-center" name="view-btn" value="View Al Books" onclick="getBooks()">View All Books</button>
-      <button class="text-center" name="view-btn" value="View All Movies" onclick="getMovies()">View All Movies</button>
+      <button class="text-center" name="viewAll" value="books">View All Books</button>
+      <button class="text-center" name="viewAll" value="movies">View All Movies</button>
     </form>
 
   </div>
