@@ -86,8 +86,39 @@ function filterItems(req, res) {
                 console.log(books);
                 console.log(authors);
 
-                res.render('pages/filteredBooks', {
+                res.render('pages/filteredBooks.ejs', {
                     books, authors
+                });
+            }
+        });
+
+    }
+
+    if (type == "movie") {
+        getFilteredMovies(id, function (err, result) {
+            console.log("Back from the filtered function with result:", result);
+
+            if (err || result == null || result.length != 1) {
+                res.status(500).json({
+                    success: false,
+                    data: err
+                });
+            } else {
+
+                var returned = JSON.stringify(result);
+                var parsedJSON = JSON.parse(returned);
+                var movies = [];
+                for (var i = 0; i < parsedJSON.length; i++) {
+                    movies.push(parsedJSON[i].movie_id);
+                    movies.push(parsedJSON[i].movie_name)
+
+                }
+
+                console.log(books);
+                console.log(authors);
+
+                res.render('pages/filteredMovies.ejs', {
+                    movies
                 });
             }
         });
@@ -99,6 +130,24 @@ function getFilteredBooks(id, callback) {
     console.log("getting " + id + "From database");
 
     var sql = "SELECT b.book_id,b.book_name,b.author_id,b.genre_id,a.author_id,a.author_name FROM book b JOIN author a ON b.author_id = a.author_id WHERE b.genre_id = $1::int";
+    var params = [id];
+
+    pool.query(sql, params, function(err, result){
+        if (err){
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        }
+
+        console.log("Found DB result: " + JSON.stringify(result.rows));
+        callback(null, result.rows);
+    })
+}
+
+function getFilteredMovies(id, callback) {
+    console.log("getting " + id + "From database");
+
+    var sql = "SELECT m.movie_id, m.movie_name, m.genre_id,FROM movie m WHERE m.genre_id = $1::int";
     var params = [id];
 
     pool.query(sql, params, function(err, result){
