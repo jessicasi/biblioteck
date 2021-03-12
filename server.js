@@ -112,8 +112,8 @@ function filterItems(req, res) {
                 var parsedJSON = JSON.parse(returned);
                 var movies = [];
                 for (var i = 0; i < parsedJSON.length; i++) {
-                    movies.push(parsedJSON[i].book_id);
-                    movies.push(parsedJSON[i].book_name)
+                    movies.push(parsedJSON[i].movie_id);
+                    movies.push(parsedJSON[i].movie_name)
 
 
                 }
