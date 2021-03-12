@@ -85,3 +85,5 @@ SELECT b.book_name,
 FROM book b JOIN author a ON b.author_id = a.author_id
 WHERE b.genre_id = $1::int
 
+   // "start": "node server.js",
+    //"test": "echo \"Error: no test specified\" && exit 1"
