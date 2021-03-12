@@ -103,7 +103,8 @@ function filterItems(req, res) {
                     success: false,
                     data: err
                 });
-            } else {
+            } 
+            else {
 
                 var returned = JSON.stringify(result);
                 var parsedJSON = JSON.parse(returned);
@@ -113,9 +114,6 @@ function filterItems(req, res) {
                     movies.push(parsedJSON[i].movie_name)
 
                 }
-
-                console.log(books);
-                console.log(authors);
 
                 res.render('pages/filteredMovies.ejs', {
                     movies
@@ -147,7 +145,7 @@ function getFilteredBooks(id, callback) {
 function getFilteredMovies(id, callback) {
     console.log("getting " + id + "From database");
 
-    var sql = "SELECT m.movie_id, m.movie_name, m.genre_id,FROM movie m WHERE m.genre_id = $1::int";
+    var sql = "SELECT m.movie_id, m.movie_name FROM movie m WHERE m.genre_id = $1::int";
     var params = [id];
 
     pool.query(sql, params, function(err, result){
