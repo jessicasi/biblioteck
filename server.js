@@ -118,7 +118,7 @@ function filterItems(req, res) {
 
                 }
 
-                res.render('pages/filteredMovies.ejs', {
+                res.render('/pages/filteredMovies.ejs', {
                     movies
                 });
             }
