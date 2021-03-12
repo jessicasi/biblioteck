@@ -118,11 +118,8 @@ function filterItems(req, res) {
 
                 }
 
-                console.log(books);
-                console.log(authors);
-
-                res.render('pages/filteredBooks.ejs', {
-                    books, authors
+                res.render('pages/filteredMovies.ejs', {
+                    movies
                 });
             }
         });
