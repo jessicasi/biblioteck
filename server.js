@@ -99,27 +99,30 @@ function filterItems(req, res) {
 
     if (type == "movie") {
         getFilteredMovies(id, function (err, result) {
-            console.log("Back from the filtered function with result:", result);
+        console.log("Back from the filtered function movies with result:", result);
 
             if (err || result == null || result.length != 1) {
                 res.status(500).json({
                     success: false,
                     data: err
                 });
-            } 
-            else {
+            } else {
 
                 var returned = JSON.stringify(result);
                 var parsedJSON = JSON.parse(returned);
                 var movies = [];
                 for (var i = 0; i < parsedJSON.length; i++) {
-                    movies.push(parsedJSON[i].movie_id);
-                    movies.push(parsedJSON[i].movie_name)
+                    movies.push(parsedJSON[i].book_id);
+                    movies.push(parsedJSON[i].book_name)
+
 
                 }
 
-                res.render('pages/filteredMovies.ejs', {
-                    movies
+                console.log(books);
+                console.log(authors);
+
+                res.render('pages/filteredBooks.ejs', {
+                    books, authors
                 });
             }
         });
