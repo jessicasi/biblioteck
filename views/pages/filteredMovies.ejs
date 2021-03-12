@@ -12,9 +12,10 @@
     <div class="container">
 
         <h1>Filtered Movies!</h1>
-       <ul>
-            <% for(var i=0; i < movies.length; i+2) { %>
+        <ul>
+            <% for(var i=1; i < movies.length; i++) { %>
             <li>Movie: <%= movies[i] %></li>
+
             <% }
             %>
             </ul>

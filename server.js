@@ -107,15 +107,12 @@ function filterItems(req, res) {
                     data: err
                 });
             } else {
-
                 var returned = JSON.stringify(result);
                 var parsedJSON = JSON.parse(returned);
                 var movies = [];
                 for (var i = 0; i < parsedJSON.length; i++) {
                     movies.push(parsedJSON[i].movie_id);
                     movies.push(parsedJSON[i].movie_name)
-
-
                 }
 
                 res.render('pages/filteredMovies.ejs', {
