@@ -1,3 +1,12 @@
+const { Pool } = require("pg");
+
+const connectionString = process.env.DATABASE_URL;
+
+const pool = new Pool({
+    connectionString: connectionString,
+    //ssl: { rejectUnauthorized: false}
+});
+
 function getAllGenres(callback){
     //get all the genres from the DB
 
@@ -15,16 +24,34 @@ function getAllGenres(callback){
 
 }
 
-function filterBooks(bookId, callback){
-    console.log("made it to filterering book model");
-    var bookId;
-    var results = {books: [{id: 1, name: "Anne of Green Gables", author: "Lucy Maude Montgomery"},
-    {id: 1, name: "Anne of Green Gables", author: "Lucy Maude Montgomery"},
-    {id: 1, name: "Anne of Green Gables", author: "Lucy Maude Montgomery"}]
+function filterBooks(book, callback){
+    console.log("made it to filterering book model" + book);
 
-    }
-    callback(null, results);
+    var sql = "SELECT b.book_id,b.book_name,b.author_id, a.author_name FROM book b JOIN author a ON b.author_id = a.author_id WHERE b.genre_id = $1::int";
+    var params = 1;
 
+    pool.query(sql, params, function (err, db_result) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        }else{
+        console.log("Found DB result: " + JSON.stringify(db_result.rows));
+        callback(null, db_result.rows);
+
+        var results = {books: 
+            [
+            {id: 1, name: book, author: "Lucy Maude Montgomery"},
+            {id: 1, name:book, author: "Lucy Maude Montgomery"},
+            {id: 1, name: book, author: "Lucy Maude Montgomery"}
+            ]
+            }
+            callback(null, results);
+        
+        }
+    });
+
+    
 }
 
 function filterMovies(movieId, callback){
