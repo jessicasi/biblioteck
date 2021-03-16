@@ -14,3 +14,7 @@ function getAllGenres(callback){
     callback(results);
 
 }
+
+module.exports = {
+    getAllGenres: getAllGenres
+}
