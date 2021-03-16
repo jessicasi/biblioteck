@@ -1,31 +1,33 @@
 const express = require('express')
 const path = require('path')
-const { Pool } = require('pg');
-const PORT = process.env.PORT || 5000
 require('dotenv').config();
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({
-    connectionString: connectionString,
-    ssl: { rejectUnauthorized: false}
-});
+//const { Pool } = require('pg');
+const PORT = process.env.PORT || 5000
+
+//const connectionString = process.env.DATABASE_URL;
+//const pool = new Pool({
+   // connectionString: connectionString,
+   // ssl: { rejectUnauthorized: false}
+//});
 
 //controllers
 const bookController = require("./controllers/bookController");
 const movieController = require("./controllers/movieController");
 const genreController = require("./controllers/genreController");
 
-const app = express()
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.json());
-app.use(express.urlencoded({extended: true})) //support url encoded body
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
+var app = express();
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json()); // support json encoded bodies
+app.use(express.urlencoded({extended: true})); // support url encoded bodies
+//app.set('views', path.join(__dirname, 'views'))
+//app.set('view engine', 'ejs')
 //app.get('/', (req, res) => res.render('pages/index'));
 
-app.get('/', genreController.getGenreList)
-    
 
-app.get("/filter", genreController.getFilterItems);
+app.get("/genres", genreController.getGenreList)
+app.get("/filter", genreController.filter);
+
 
 app.post('/book', function (req, res) {
     var book = req.body.book;
@@ -42,7 +44,7 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 //example: app.get("/books", bookController.definedfunctioname)
 
 
-function getGenreLists(req, res) {
+/* function getGenreLists(req, res) {
     console.log("building genre lists");
 
     var sql = "SELECT genre_name, genre_id FROM genre";
@@ -171,4 +173,5 @@ function getFilteredMovies(id, callback) {
         console.log("Found DB result: " + JSON.stringify(result.rows));
         callback(null, result.rows);
     })
-}
+} */
+
