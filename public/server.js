@@ -10,9 +10,9 @@ const pool = new Pool({
 });
 
 //controllers
-const bookController = require("./controllers/bookController");
-const movieController = require("./controllers/movieController");
-const genreController = require("./controllers/genreController");
+const bookController = require("../controllers/bookController");
+const movieController = require("../controllers/movieController");
+const genreController = require("../controllers/genreController");
 
 const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
