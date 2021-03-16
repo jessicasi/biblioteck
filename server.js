@@ -1,19 +1,12 @@
 const express = require('express')
 const path = require('path')
 require('dotenv').config();
-//const { Pool } = require('pg');
 const PORT = process.env.PORT || 5000
 
-//const connectionString = process.env.DATABASE_URL;
-//const pool = new Pool({
-   // connectionString: connectionString,
-   // ssl: { rejectUnauthorized: false}
-//});
-
 //controllers
-const bookController = require("./controllers/bookController");
-const movieController = require("./controllers/movieController");
-const genreController = require("./controllers/genreController");
+const searchController = require("./controllers/searchController");
+const filterController = require("./controllers/filterController");
+const modifyController = require("./controllers/modifyController");
 
 var app = express();
 
@@ -24,9 +17,8 @@ app.use(express.urlencoded({extended: true})); // support url encoded bodies
 //app.set('view engine', 'ejs')
 //app.get('/', (req, res) => res.render('pages/index'));
 
-
-app.get("/genres", genreController.getGenreList)
-app.get("/filter", genreController.filter);
+app.get("/genres", searchController.getGenreList)
+app.get("/filter", filterController.filter);
 
 
 app.post('/book', function (req, res) {

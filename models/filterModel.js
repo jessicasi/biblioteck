@@ -4,25 +4,9 @@ const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({
     connectionString: connectionString,
-    //ssl: { rejectUnauthorized: false}
+    ssl: { rejectUnauthorized: false}
 });
 
-function getAllGenres(callback){
-    //get all the genres from the DB
-
-    //put genre function here
-
-    var results = {
-        genres: [
-            {id:1, name:"comedy"},
-            {id:2, name:"fantasy"},
-            {id:3, name:"holiday"}
-        ]
-    }
-    //return genres
-    callback(results);
-
-}
 
 function filterBooks(book, callback){
     console.log("made it to filterering book model" + book);
@@ -104,7 +88,6 @@ function filterMovies(movieId, callback){
 //}
 
 module.exports = {
-    getAllGenres: getAllGenres,
     filterBooks: filterBooks,
     filterMovies: filterMovies
 }
