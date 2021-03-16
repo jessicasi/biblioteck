@@ -2,7 +2,7 @@
 
 
 
-function getAllBooks() {
+/* function getAllBooks() {
     //Get all the books from the DB
 
     //put function here
@@ -21,4 +21,4 @@ function insertNewBook() {
 module.exports= {
     getAllBooks: getAllBooks,
     getBooksByGenre
-}
+} */

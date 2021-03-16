@@ -1,4 +1,4 @@
-const genreModel = requrie("../models/genreModel.js")
+const genreModel = require("../models/genreModel.js")
 
 function getGenreList(req, res){
     console.log("getting all genres ...")

@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 //app.get('/', (req, res) => res.render('pages/index'));
 
-app.get('/', genreContoller.getGenreList);
+app.get('/', genreController.getGenreList);
 app.get('/filter', filterItems);
 
 app.post('/book', function (req, res) {
