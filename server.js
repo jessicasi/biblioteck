@@ -1,34 +1,45 @@
-const {
-    BADHINTS
-} = require('dns');
 const express = require('express')
 const path = require('path')
-const {
-    Pool
-} = require('pg');
+const { Pool } = require('pg');
 const PORT = process.env.PORT || 5000
 require('dotenv').config();
-
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({
     connectionString: connectionString,
-        ssl: {
-          rejectUnauthorized: false 
-        }
+    ssl: { rejectUnauthorized: false}
 });
 
+//controllers
+const bookController = require("./controllers/bookController");
+const movieController = require("./controllers/movieController");
+const genreController = require("./controllers/genreController");
 
 const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+})) //support url encoded body
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 //app.get('/', (req, res) => res.render('pages/index'));
 
-app.get('/', getGenreLists);
+app.get('/', genreContoller.getGenreList);
 app.get('/filter', filterItems);
+
+app.post('/book', function (req, res) {
+    var book = req.body.book;
+
+    console.log("Inserting new book: " + book);
+});
+
+app.post('/movie', function (req, res) {
+
+});
+
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
-
+//example: app.get("/books", bookController.definedfunctioname)
 
 
 function getGenreLists(req, res) {
@@ -52,7 +63,8 @@ function getGenreLists(req, res) {
             ids.push(parsedJSON[i].genre_id);
         }
         res.render('pages/index', {
-            dropdown, ids
+            dropdown,
+            ids
         });
     })
 
@@ -90,7 +102,8 @@ function filterItems(req, res) {
                 console.log(authors);
 
                 res.render('pages/filteredBooks.ejs', {
-                    books, authors
+                    books,
+                    authors
                 });
             }
         });
@@ -99,7 +112,7 @@ function filterItems(req, res) {
 
     if (type == "movie") {
         getFilteredMovies(id, function (err, result) {
-        console.log("Back from the filtered function movies with result:", result);
+            console.log("Back from the filtered function movies with result:", result);
 
             if (err || result == null || result.length != 1) {
                 res.status(500).json({
@@ -130,8 +143,8 @@ function getFilteredBooks(id, callback) {
     var sql = "SELECT b.book_id,b.book_name,b.author_id,b.genre_id,a.author_id,a.author_name FROM book b JOIN author a ON b.author_id = a.author_id WHERE b.genre_id = $1::int";
     var params = [id];
 
-    pool.query(sql, params, function(err, result){
-        if (err){
+    pool.query(sql, params, function (err, result) {
+        if (err) {
             console.log("An error with the database occurred");
             console.log(err);
             callback(err, null);
@@ -148,8 +161,8 @@ function getFilteredMovies(id, callback) {
     var sql = "SELECT m.movie_id, m.movie_name FROM movie m WHERE m.genre_id = $1::int";
     var params = [id];
 
-    pool.query(sql, params, function(err, result){
-        if (err){
+    pool.query(sql, params, function (err, result) {
+        if (err) {
             console.log("An error with the database occurred");
             console.log(err);
             callback(err, null);
