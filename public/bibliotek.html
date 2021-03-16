@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="bibliotek-clientside.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <h1 class="text-center">Bibliotek</h1>
+    <form action="/filter" method="get" id="filterForm">
+      <label>Filter by Genre</label>
+      <select class="form-control" name="id">
+        <% for(var i=0; i < dropdown.length; i++) { %>
+        <option value="<%= ids[i] %>"><%= dropdown[i] %></option>
+        <% }
+        %>
+      </select>
+      <button class="text-center" name="filterType" value="book" >Filter Books</button>
+      <button class="text-center" name="filterType" value="movie">Filter Movies</button>
+
+    </form>
+    <form>
+      <p>Or view all</p>
+      <button class="text-center" name="viewAll" value="books">View All Books</button>
+      <button class="text-center" name="viewAll" value="movies">View All Movies</button>
+    </form>
+
+  </div>
+
+  <input type="text" id="book" placeholder="Book"><button onClick="searchByBook()">Search By Book</button><br>
+  <input type="text" id="movie" placeholder="Movie"><button onClick="searchByMovie()">Search By Movie</button>
+  <div id="results">
+    <h2>Results</h2>
+    <ul id="ulBibliotek">
+      
+    </ul>
+
+  </div>
+
+
+</body>
+
+</html>

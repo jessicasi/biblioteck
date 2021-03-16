@@ -1,6 +1,6 @@
 function searchByBook(){
     console.log("Searching by book...");
-var book = $('#book').valu();
+var book = $("#book").value();
 console.log("Book: " + book);
 
 }
