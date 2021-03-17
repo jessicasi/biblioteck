@@ -18,7 +18,8 @@ app.use(express.urlencoded({extended: true})); // support url encoded bodies
 //app.get('/', (req, res) => res.render('pages/index'));
 
 app.get("/genres", searchController.getGenreList)
-app.get("/filter", filterController.filter);
+app.get("/filter", filterController.filter)
+
 
 
 app.post('/book', function (req, res) {

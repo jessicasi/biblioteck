@@ -7,6 +7,7 @@ function filter(req, res){
 
     filterModel.filterBooks(book,function(error, results){
         res.json(results);
+        console.log("results from the DB are:" + results.book.name) ;
     });
 
     /* var movieId = 1;

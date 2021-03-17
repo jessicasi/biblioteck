@@ -3,7 +3,7 @@ function searchByBook() {
     var book = $("#book").val();
     console.log("Book: " + book);
 
-    $.get("/filter", {book:book}, function (data) {
+    $.get("/filter", {book:book}, function(data) {
         console.log("Back from the server with: ");
         console.log(data);
 
