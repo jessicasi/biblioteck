@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+</head>
+
+<body>
+    <h1>Movie Search</h1>
+    <input type="text" id="movie" placeholder="Movie Title Here"><button onclick="searchMovie()">Search
+        Movies</button><br>
+
+    <div class="container">
+        <h2>Results</h2>
+        <ul id="ulMovies">
+        </ul>
+    </div>
+
+    <div id="details">
+    </div>
+
+
+
+    <script>
+
+        const key = "706c4d3f";
+        const valuepair = `http://www.omdbapi.com/?apikey=${key}`;
+        function searchMovie() {
+            const input = document.getElementById("movie").value;
+            const ul = document.getElementById("ulMovies");
+            // console.log(input);
+            fetch(valuepair + "&s=" + input)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data.Search)
+                    var string = "";
+                    data.Search.forEach(movie => {
+                        var movieId = movie.imdbID;
+                        string += `<li>Title: ${movie.Title}`;
+                            
+                        string += '<button onclick="moreDetails(\'' + movieId + '\')">More Details</button></li>';
+                        // string += `<button onClick="moreDetails(\'' + ${movieId} + '\')"'>More Details</button></li>`;
+                            // console.log(movie.imdbID);
+                    });
+                    ul.innerHTML = string;
+                });
+
+        }
+
+        const moreDetails = (movieimdbID) => {
+            console.log("Movie ID: " + movieimdbID)
+            // const value = addEventListener();
+            // document.getQueryById()
+            const ul = document.getElementById("details");
+            fetch(valuepair + "&i=" + movieimdbID)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    var string = `<h3>Details</h3><ul>`;
+                    for (var index in data) {
+                        if(index != 'Poster'){
+                        string += '<li>\'' + index + '\' : \'' + data[index] + '\'</li>';
+                        } else {
+                            string += '<li>\'' + index + '\': <img src= \'' + data[index] + '\'></li>'
+                        }
+                    }
+                    string += `</ul>`;
+                    ul.innerHTML = string;
+                });
+        }
+
+// {Title: "Star Wars: Episode IV - A New Hope", Year: "1977", imdbID: "tt0076759", Type: "movie", Poster: "https://m.media-amazon.com/images/M/MV5BNzVlY2MwMj…zA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"}
+
+// Title": "Star Wars: Episode I - The Phantom Menace",
+//   "Year": "1999",
+//   "Rated": "PG",
+//   "Released": "19 May 1999",
+// "Poster": "https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg",
+
+    </script>
+</body>
+
+</html>

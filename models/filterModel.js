@@ -13,32 +13,9 @@ const pool = new Pool({
 
 
 function filterBooks(book, callback) {
-    console.log("made it to filterering book model" + book);
+    console.log("made it to filterering book model " + book);
 
-    //var sql = "SELECT b.book_id,b.book_name,b.author_id, a.author_name FROM book b JOIN author a ON b.author_id = a.author_id WHERE b.genre_id = $1::int";
-    var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
-    var params = [book];
-
-    pool.query(sql, params, function (err, db_results) {
-        if (err) {
-            console.log("An error with the database occurred");
-            console.log(err);
-            callback(err, null);
-        } else {
-            //console.log("Found DB result: " + JSON.stringify(db_result.rows));
-            //callback(null, db_result.rows);
-            console.log(db_results.rows);
-            var results = {
-                success:true,
-                books:db_results.rows
-            };
-        
-            
-            callback(null, results);
-
-        }
-    });
-
+    
 
 }
 

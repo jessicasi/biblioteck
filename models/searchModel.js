@@ -46,6 +46,72 @@ function getAllGenres(callback){
 
 }
 
+
+
+function searchByBook(book, callback) {
+    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book_name = $1::text";
+
+
+    //var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book.genre_id = $1::int";
+    //var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
+    var params = [book];
+    var string="";
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            //console.log("Found DB result: " + JSON.stringify(db_result.rows));
+            //callback(null, db_result.rows);
+            console.log(db_results.rows);
+            string= JSON.stringify(db_results.rows);
+            //console.log(JSON.stringify(db_results.rows));
+            //console.log(JSON.parse(string));
+
+           /*  for (var index in db_results.rows) {
+                
+                string += '<li>\'' + index + '\' : \'' + data[index] + '\'</li>';
+            
+            }*/
+
+            var results = {
+                success:true,
+                books:db_results.rows
+            }; 
+        
+            console.log(results);
+            callback(null, results); 
+
+        }
+    });
+}
+
+function searchByMovie(movie, callback) {
+    var sql = "SELECT movie_id,movie_name FROM movie WHERE movie_name = $1::text";
+
+    var params = [movie];
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            console.log(db_results.rows);
+
+            var results = {
+                success:true,
+                movie:db_results.rows
+            }; 
+        
+            console.log(results);
+            callback(null, results); 
+
+        }
+    });
+}
+
+
 /* function getAllBooks() {
     //Get all the books from the DB
 
@@ -63,5 +129,7 @@ function getAllGenres(callback){
 }*/
 
 module.exports = {
-    getAllGenres: getAllGenres
+    getAllGenres: getAllGenres,
+    searchByBook:searchByBook,
+    searchByMovie:searchByMovie
 }

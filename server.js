@@ -12,13 +12,17 @@ var app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // support json encoded bodies
-app.use(express.urlencoded({extended: true})); // support url encoded bodies
-//app.set('views', path.join(__dirname, 'views'))
-//app.set('view engine', 'ejs')
-//app.get('/', (req, res) => res.render('pages/index'));
+app.use(express.urlencoded({
+    extended: true
+})); // support url encoded bodies
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
+app.get('/', (req, res) => res.sendFile(path.join(__dirname+ '/public/bibliotek.html')));
 
 app.get("/genres", searchController.getGenreList)
 app.get("/filter", filterController.filter)
+app.get("/searchBook", searchController.searchBook)
+app.get("/searchMovie", searchController.searchMovie)
 
 
 
@@ -167,4 +171,3 @@ function getFilteredMovies(id, callback) {
         callback(null, result.rows);
     })
 } */
-
