@@ -17,24 +17,25 @@ body {
     padding-bottom: 50px;
 }
 
+
 .layout {
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
 
-.bookhalf{
+#booksDiv{
     grid-row-start: 1;
     grid-row-end: 2;
     text-align: center;
 }
 
-.moviehalf {
+#moviesDiv {
     grid-row-start: 2;
     grid-row-end: 3;
     text-align: center;
 }
 
-.bookhalf, .moviehalf {
+#booksDiv, #moviesDiv {
     border-bottom: 3px solid black;
     margin-bottom: 20px;
     padding-bottom: 20px;

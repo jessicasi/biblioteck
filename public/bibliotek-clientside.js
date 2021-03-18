@@ -59,6 +59,7 @@ function getAllGenres() {
         //console.log(results);
         document.getElementById("genreBookFilter").innerHTML = results;
         document.getElementById("genreMovieFilter").innerHTML = results;
+        document.getElementById("newItemGenreFilter").innerHTML = results;
     })
 }
 
@@ -70,13 +71,14 @@ function filterByBook() {
     $.get("/filterBooks", {
         genre_id: genre_id
     }, function (data) {
-
+        var bookList = "";
         for (var i = 0; i < data.books.length; i++) {
             var book = data.books[i];
             //console.log(book);
             //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
-            document.getElementById("ulBibliotek").innerHTML = "<li>" + book.book_name + " " + book.author_name + "</li>";
+           bookList += "<li>" + book.book_name + " " + book.author_name + "</li>";
         }
+        document.getElementById("ulBibliotek").innerHTML = bookList;
     })
 
 }
@@ -89,13 +91,45 @@ function filterByMovie() {
     $.get("/filterMovies", {
         genre_id: genre_id
     }, function (data) {
-
+    var movieList = "";
         for (var i = 0; i < data.movies.length; i++) {
             var movie = data.movies[i];
             //console.log(book);
             //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
-            document.getElementById("ulBibliotek").innerHTML = "<li>" + movie.movie_name + "</li>";
+             movieList += "<li>" + movie.movie_name + "</li>";
         }
+        document.getElementById("ulBibliotek").innerHTML = movieList;
     })
+
+}
+
+function showAuthor(divId, element) {
+    document.getElementById(divId).style.display = element.value == 'book' ? 'block' : 'none';
+}
+
+function addNewItem() {
+    console.log("adding item");
+
+    var itemType = $("#addType").val();
+    var itemName = $("#newItemName").val();
+    var itemGenre = $("#newItemGenreFilter").val();
+
+
+
+    if (itemType == 'book') {
+        var authorName = $("#newItemAuthor").val();
+        var newBook = {genre_id: itemGenre,
+            book_name: itemName,
+            author_name: authorName};
+
+            console.log(newBook);
+            $.post("/addBook", {newBook: newBook}, function (data) {
+                console.log(data);
+                if (data.success == true){
+                    document.getElementById("ulBibliotek").innerHTML = "Book added";
+                }
+
+        })
+    }
 
 }

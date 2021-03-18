@@ -82,7 +82,17 @@ SELECT b.book_name,
     b.genre_id,
     a.author_id,
     a.author_name
-FROM book b JOIN author a ON b.author_id = a.author_id
+FROM book b
+    JOIN author a ON b.author_id = a.author_id
 WHERE b.genre_id = $1::int
-
-  
+INSERT INTO author (author_name)
+VALUES ('Benedict Jacka');
+INSERT INTO book (book_name, book_format, author_id)
+VALUES('Chosen', lastval());
+INSERT INTO author (author_name)
+VALUES ('Alexander C Kane');
+INSERT INTO book (book_name, author_id)
+VALUES (
+        'Andrea Vernon and the Superhero Industrial Complex',
+        lastval()
+    );

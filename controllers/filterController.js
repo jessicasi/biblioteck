@@ -2,7 +2,7 @@ const filterModel = require("../models/filterModel.js")
 
 function filterBooks(req, res){
     console.log("getting filtered books...")
-
+    
     var genre_id = req.query.genre_id;
 
     filterModel.filterByBook(genre_id,function(error, results){

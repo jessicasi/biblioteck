@@ -5,6 +5,7 @@
   <script src="bibliotek-clientside.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="stylesheets/main.css">
 
 
 
@@ -18,33 +19,54 @@
   <h1>Bibliotek</h1>
   <div class="container">
 
-    <h2>Books</h2>
+
     <div id="booksDiv">
+      <h2>Books</h2>
       <select id="genreBookFilter">
 
       </select>
-      <button onclick="filterByBook()">Filter Books</button>
+      <button onclick="filterByBook()">Filter Books</button><br>
       <input type="text" id="book" placeholder="Book"><button onclick="searchByBook()">Search By Book</button><br>
     </div>
 
     <div id="moviesDiv">
+      <h2>Movies</h2>
       <select id="genreMovieFilter">
 
       </select>
-      <button onclick="filterByMovie()">Filter Movies</button>
+      <button onclick="filterByMovie()">Filter Movies</button><br>
       <input type="text" id="movie" placeholder="Movie"><button onclick="searchByMovie()">Search By Movie</button>
+    </div>
+    <div id="results">
+      <h2>Search Results</h2>
+      <ul id="ulBibliotek">
 
-      <div id="results">
-        <h2>Results</h2>
-        <ul id="ulBibliotek">
-
-        </ul>
-      </div>
+      </ul>
     </div>
 
-    <script>
-      window.document.onload = getAllGenres();
-    </script>
+   <div id="modifyDiv">
+      <h2>Add Book or Movie</h2>
+      <select id="addType" onchange="showAuthor('hiddenAuthor', this)">
+        <option value="book">Book</option>
+        <option value="movie">Movie</option>
+      </select>
+      <label>Name</label>
+      <input type="text" id="newItemName" placeholder="Name">
+      <label>Genre</label>
+      <select id="newItemGenreFilter"></select>
+       <!-- Add location in here as well, and perhaps image -->
+     <div id="hiddenAuthor">
+        <label>Author Name</label>
+        <input type="text" id="newItemAuthor" placeholder="Author Name">
+      </div>
+      <button onclick="addNewItem()">Add Item</button>
+
+    </div>
+
+  </div>
+  <script>
+    window.document.onload = getAllGenres();
+  </script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@ function getAllGenres(callback) {
                     console.log(err);
                     callback(err, null);
                 } else {
-                    console.log(db_results.rows);
+                    //console.log(db_results.rows);
                     string = JSON.stringify(db_results.rows);
 
                     var results = {
@@ -36,7 +36,7 @@ function getAllGenres(callback) {
                         genres: db_results.rows
                     };
 
-                    console.log(results);
+                   // console.log(results);
                     callback(null, results);
 
                 }
