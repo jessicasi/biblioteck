@@ -44,28 +44,74 @@
       </ul>
     </div>
 
-   <div id="modifyDiv">
+    <div id="modifyDiv">
       <h2>Add Book or Movie</h2>
+      <label>Item Type</label>
       <select id="addType" onchange="showAuthor('hiddenAuthor', this)">
         <option value="book">Book</option>
         <option value="movie">Movie</option>
-      </select>
+      </select><br>
       <label>Name</label>
-      <input type="text" id="newItemName" placeholder="Name">
+      <input type="text" id="newItemName" placeholder="Name"><br>
       <label>Genre</label>
-      <select id="newItemGenreFilter"></select>
-       <!-- Add location in here as well, and perhaps image -->
-     <div id="hiddenAuthor">
+      <select id="newItemGenreFilter"></select><br>
+      <label>Series</label>
+      <select id="newItemSeriesFilter"></select><br>
+      <!--       <label>Location</label>
+      <input type="text" id="newLocationName" placeholder="Series Name"><br> -->
+      <!-- Add location in here as well, and perhaps image -->
+      <div id="hiddenAuthor">
         <label>Author Name</label>
-        <input type="text" id="newItemAuthor" placeholder="Author Name">
+        <select id="newItemAuthorFilter"></select>
+
       </div>
       <button onclick="addNewItem()">Add Item</button>
 
+    
+    <hr>
+
+    <h2></h2>
+    <label> Add New Genre</label></br>
+    <input type="text" id="addNewGenre" placeholder="New Genre">
+    <button onclick="newGenre()">Add New Genre</button><br>
+    <label>Add New Series</label></br>
+    <input type="text" id="" placeholder="Series Name">
+    <button onclick="newSeries()">Add New Series</button><br>
+    <label>Add New Author</label><br>
+    <input type="text" id="addNewAuthor" placeholder="Author Name"><button onclick="newAuthor()">Add New
+      Author</button>
     </div>
+
+    <!-- <h2>Modify Book or Movie</h2>
+    <label>Item Type</label>
+    <select id="editType" onchange="setInfo('hideAuthor', this)">
+      <option value="choose">Choose Type</option>
+      <option value="book">Book</option>
+      <option value="movie">Movie</option>
+    </select><br>
+    <label>Name</label>
+    <select id="modifyFilter"></select>
+    <label>Genre</label>
+    <select id="editItemGenreFilter"></select>
+    <label>Series</label>
+    <select id="editItemSeriesFilter"></select><br>
+
+           <label>Location</label>
+      <input type="text" id="newLocationName" placeholder="Series Name"><br> -->
+    <!-- Add location in here as well, and perhaps image -->
+    <!--     <div id="hideAuthor">
+      <label>Author Name</label>
+      <select id="editItemAuthorFilter"></select>
+    </div>
+    <button onclick="addNewItem()">Add Item</button> -->
+
+  </div>
 
   </div>
   <script>
     window.document.onload = getAllGenres();
+    window.document.onload = getAllSeries();
+    window.document.onload = getAllAuthors();
   </script>
 </body>
 

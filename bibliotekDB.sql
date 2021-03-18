@@ -96,3 +96,6 @@ VALUES (
         'Andrea Vernon and the Superhero Industrial Complex',
         lastval()
     );
+
+
+var sql = "SELECT book_name, book_id , author_name, author.author_id, genre_name, genre.genre_id, series_name, series_id FROM book INNER JOIN author ON book.author_id = author.author_id INNER JOIN genre ON book.genre_id = genre.genre_id INNER JOIN series ON book.series_id = series.series_id WHERE book_id = $1::int";

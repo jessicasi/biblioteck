@@ -9,6 +9,34 @@ function getGenreList(req, res){
     });
 }
 
+function getSeriesList(req, res) {
+    console.log("getting all series...")
+
+    searchModel.getAllSeries(function(error,results){
+        res.json(results);
+    });
+    
+}
+
+function getAuthorList(req, res){
+    console.log("getting all authors...")
+
+    searchModel.getAllAuthors(function(error,results){
+        res.json(results);
+    });
+
+}
+
+function getAllBooks(req, res){
+    console.log("getting all books...")
+
+    searchModel.getAllBooks(function(error,results){
+        
+        res.json(results);
+    });
+
+}
+
 function searchBook(req, res){
     console.log("getting filtered items...")
 
@@ -39,5 +67,8 @@ function searchMovie(req, res){
 module.exports ={
     getGenreList: getGenreList,
     searchBook:searchBook,
-    searchMovie:searchMovie
+    searchMovie:searchMovie,
+    getSeriesList:getSeriesList,
+    getAuthorList:getAuthorList,
+    getAllBooks:getAllBooks
 }

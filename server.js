@@ -20,14 +20,20 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.sendFile(path.join(__dirname+ '/public/bibliotek.html')));
 
 app.get("/genres", searchController.getGenreList)
+app.get("/series", searchController.getSeriesList)
+app.get("/authors", searchController.getAuthorList)
 app.get("/filterBooks", filterController.filterBooks)
 app.get("/searchBook", searchController.searchBook)
 app.get("/searchMovie", searchController.searchMovie)
 app.get("/filterMovies", filterController.filterMovies)
+app.get("/allBooks", searchController.getAllBooks)
 
 
 
 app.post("/addBook", modifyController.addNewBook)
+app.post("/addGenre", modifyController.addNewGenre);
+app.post("/addSeries", modifyController.addNewSeries)
+app.post("/addAuthor", modifyController.addNewAuthor)
 
 app.post('/movie', function (req, res) {
 

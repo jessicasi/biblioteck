@@ -17,6 +17,24 @@ body {
     padding-bottom: 50px;
 }
 
+h1, h2, h3{
+    text-align: center;
+}
+
+input, select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+button{
+    margin-left: 10px;
+}
+
+#modifyDiv{
+    width: 95%;
+    margin-left: 15px;
+}
+
 
 .layout {
     display: grid;
@@ -35,7 +53,7 @@ body {
     text-align: center;
 }
 
-#booksDiv, #moviesDiv {
+#booksDiv, #moviesDiv, #results {
     border-bottom: 3px solid black;
     margin-bottom: 20px;
     padding-bottom: 20px;
