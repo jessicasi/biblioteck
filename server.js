@@ -20,9 +20,10 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.sendFile(path.join(__dirname+ '/public/bibliotek.html')));
 
 app.get("/genres", searchController.getGenreList)
-app.get("/filter", filterController.filter)
+app.get("/filterBooks", filterController.filterBooks)
 app.get("/searchBook", searchController.searchBook)
 app.get("/searchMovie", searchController.searchMovie)
+app.get("/filterMovies", filterController.filterMovies)
 
 
 

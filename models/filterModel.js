@@ -12,33 +12,61 @@ const pool = new Pool({
 });
 
 
-function filterBooks(book, callback) {
-    console.log("made it to filterering book model " + book);
+function filterByBook(genre_id, callback) {
+    console.log("made it to filterering book model " + genre_id);
 
-    
+    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book.genre_id = $1::int";
+    //var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
+    var params = [genre_id];
+    var string = "";
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            console.log(db_results.rows);
+            string = JSON.stringify(db_results.rows);
+            var results = {
+                success: true,
+                books: db_results.rows
+            };
 
+            //console.log(results);
+            callback(null, results);
+
+        }
+    });
 }
 
-function filterMovies(movieId, callback) {
-    console.log("made it to filterering movie model");
-    var movieId;
-    var results = {
-        movies: [{
-                id: 1,
-                name: "The Santa Clause"
-            },
-            {
-                id: 1,
-                name: "The Santa Clause"
-            },
-            {
-                id: 1,
-                name: "The Santa Clause"
-            },
-        ]
 
-    }
-    callback(null, results);
+
+
+function filterByMovie(genre_id, callback) {
+    console.log("made it to filterering movie model");
+
+    var sql = "SELECT movie_id,movie_name FROM movie WHERE movie.genre_id = $1::int";
+    //var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
+    var params = [genre_id];
+    var string = "";
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            console.log(db_results.rows);
+            string = JSON.stringify(db_results.rows);
+            var results = {
+                success: true,
+                movies: db_results.rows
+            };
+
+            //console.log(results);
+            callback(null, results);
+
+        }
+    });
 }
 
 
@@ -80,6 +108,6 @@ if (type == "book") {
 //}
 
 module.exports = {
-    filterBooks: filterBooks,
-    filterMovies: filterMovies
+    filterByBook: filterByBook,
+    filterByMovie: filterByMovie
 }

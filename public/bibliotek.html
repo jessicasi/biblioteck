@@ -8,48 +8,43 @@
 
 
 
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
 
-
+  <h1>Bibliotek</h1>
   <div class="container">
-    <!-- <h1 class="text-center">Bibliotek</h1>
-    <form action="/filter" method="get" id="filterForm">
-      <label>Filter by Genre</label>
-      <select class="form-control" name="id">
-        <% for(var i=0; i < dropdown.length; i++) { %>
-        <option value="<%= ids[i] %>"><%= dropdown[i] %></option>
-        <% }
-        %>
+
+    <h2>Books</h2>
+    <div id="booksDiv">
+      <select id="genreBookFilter">
+
       </select>
-      <button class="text-center" name="filterType" value="book" >Filter Books</button>
-      <button class="text-center" name="filterType" value="movie">Filter Movies</button>
+      <button onclick="filterByBook()">Filter Books</button>
+      <input type="text" id="book" placeholder="Book"><button onclick="searchByBook()">Search By Book</button><br>
+    </div>
 
-    </form>
-    <form>
-      <p>Or view all</p>
-      <button class="text-center" name="viewAll" value="books">View All Books</button>
-      <button class="text-center" name="viewAll" value="movies">View All Movies</button>
-    </form>
+    <div id="moviesDiv">
+      <select id="genreMovieFilter">
 
-  </div> -->
+      </select>
+      <button onclick="filterByMovie()">Filter Movies</button>
+      <input type="text" id="movie" placeholder="Movie"><button onclick="searchByMovie()">Search By Movie</button>
 
-  <input type="text" id="book" placeholder="Book"><button onclick="searchByBook()">Search By Book</button><br>
-  <input type="text" id="movie" placeholder="Movie"><button onclick="searchByMovie()">Search By Movie</button>
-  
-  <div id="results">
-    <h2>Results</h2>
-    <ul id="ulBibliotek">
-      
-    </ul>
+      <div id="results">
+        <h2>Results</h2>
+        <ul id="ulBibliotek">
 
-  </div>
+        </ul>
+      </div>
+    </div>
 
-
+    <script>
+      window.document.onload = getAllGenres();
+    </script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 const searchModel = require("../models/searchModel.js")
 
 function getGenreList(req, res){
-    console.log("getting all genres ...")
+    console.log("getting all genres controller ...")
 
 
     searchModel.getAllGenres(function(error,results){
