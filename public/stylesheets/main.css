@@ -41,6 +41,9 @@ button{
 }
 
 
+#hiddenGenre, #hiddenSeries, #hiddenNewAuthor{
+    display: none;
+}
 .layout {
     display: grid;
     grid-template-rows: 1fr 1fr;

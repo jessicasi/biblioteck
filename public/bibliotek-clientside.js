@@ -3,7 +3,6 @@ window.onload = setUpDropDowns;
 function setUpDropDowns() {
 
     //Genre drop downs
-    console.log("getting all genres");
     $.get("/genres", function (data) {
         var results = "";
         for (var i = 0; i < data.genres.length; i++) {
@@ -11,34 +10,36 @@ function setUpDropDowns() {
             // console.log(genre);
             results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
         }
+        results += " <option value='new'> Add New Genre </option>";
 
         //console.log(results);
-        document.getElementById("genreBookFilter").innerHTML = results;
-        document.getElementById("genreMovieFilter").innerHTML = results;
+        document.getElementById("genreFilter").innerHTML = results;
         document.getElementById("newItemGenreFilter").innerHTML = results;
         //document.getElementById("editItemGenreFilter").innerHTML = results;
     })
 
     //series drop downs
-    console.log("getting all series");
     $.get("/series", function (data) {
         var results = "";
         for (var i = 0; i < data.series.length; i++) {
             var series = data.series[i];
             results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
         }
+
+        results += " <option value='new'> Add New Series </option>";
         document.getElementById("newItemSeriesFilter").innerHTML = results;
         // document.getElementById("editItemSeriesFilter").innerHTML = results;
     })
 
     //author drop downs
-    console.log("getting all authors");
     $.get("/authors", function (data) {
         var results = "";
         for (var i = 0; i < data.authors.length; i++) {
             var authors = data.authors[i];
             results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
         }
+
+        results += " <option value='new'> Add New Author </option>";
         document.getElementById("newItemAuthorFilter").innerHTML = results;
         //document.getElementById("editItemAuthorFilter").innerHTML = results;
     })
@@ -46,9 +47,8 @@ function setUpDropDowns() {
 
 
 function searchByBook() {
-    console.log("Searching by book...");
     var book = $("#book").val();
-    //console.log("Book: " + book);
+    document.getElementById("book").val = "";
 
     $.get("/searchBook", {
         book: book
@@ -69,21 +69,14 @@ function searchByBook() {
 }
 
 function searchByMovie() {
-    console.log("Searching by movie...");
-
     var movie = $("#movie").val();
+    document.getElementById("movie").val = "";
 
     $.get("/searchMovie", {
         movie: movie
     }, function (data) {
-        //console.log("Back from the server with: ");
-        // console.log(data);
-        //console.log(data.books);
-
         for (var i = 0; i < data.movie.length; i++) {
             var movie = data.movie[i];
-            //console.log(movie);
-            //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
             document.getElementById("ulBibliotek").innerHTML = "<li>" + movie.movie_name + "</li>";
         }
 
@@ -98,8 +91,9 @@ function getAllGenres() {
             var genre = data.genres[i];
             results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
         }
-        document.getElementById("genreBookFilter").innerHTML = results;
-        document.getElementById("genreMovieFilter").innerHTML = results;
+
+        results += " <option value='new'> Add New Genre </option>";
+        document.getElementById("genreFilter").innerHTML = results;
         document.getElementById("newItemGenreFilter").innerHTML = results;
         //document.getElementById("editItemGenreFilter").innerHTML = results;
     })
@@ -115,6 +109,8 @@ function getAllSeries() {
             var series = data.series[i];
             results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
         }
+
+        results += " <option value='new'> Add New Series </option>";
         document.getElementById("newItemSeriesFilter").innerHTML = results;
         // document.getElementById("editItemSeriesFilter").innerHTML = results;
     })
@@ -141,7 +137,7 @@ function getAllAuthors() {
 function filterByBook() {
     console.log("filtering Books...");
 
-    var genre_id = $("#genreBookFilter").val();
+    var genre_id = $("#genreFilter").val();
     //console.log(genre_id);
     $.get("/filterBooks", {
         genre_id: genre_id
@@ -149,8 +145,7 @@ function filterByBook() {
         var bookList = "";
         for (var i = 0; i < data.books.length; i++) {
             var book = data.books[i];
-            //console.log(book);
-            //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
+
             bookList += "<li>" + book.book_name + " " + book.author_name + "</li>";
         }
         document.getElementById("ulBibliotek").innerHTML = bookList;
@@ -161,7 +156,7 @@ function filterByBook() {
 function filterByMovie() {
     console.log("filtering Movies...");
 
-    var genre_id = $("#genreMovieFilter").val();
+    var genre_id = $("#genreFilter").val();
     //console.log(genre_id);
     $.get("/filterMovies", {
         genre_id: genre_id
@@ -169,8 +164,6 @@ function filterByMovie() {
         var movieList = "";
         for (var i = 0; i < data.movies.length; i++) {
             var movie = data.movies[i];
-            //console.log(book);
-            //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
             movieList += "<li>" + movie.movie_name + "</li>";
         }
         document.getElementById("ulBibliotek").innerHTML = movieList;
@@ -180,6 +173,18 @@ function filterByMovie() {
 
 function showAuthor(divId, element) {
     document.getElementById(divId).style.display = element.value == 'book' ? 'block' : 'none';
+}
+
+function showNewGenre(divId, element) {
+    document.getElementById(divId).style.display = element.value == 'new' ? 'block' : 'none';
+}
+
+function showNewSeries(divId, element) {
+    document.getElementById(divId).style.display = element.value == 'new' ? 'block' : 'none';
+}
+
+function showNewAuthor(divId, element) {
+    document.getElementById(divId).style.display = element.value == 'new' ? 'block' : 'none';
 }
 
 
