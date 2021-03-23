@@ -1,3 +1,50 @@
+window.onload=setUpDropDowns;
+
+function setUpDropDowns() {
+
+    //Genre drop downs
+    console.log("getting all genres");
+    $.get("/genres", function (data) {
+        var results = "";
+        for (var i = 0; i < data.genres.length; i++) {
+            var genre = data.genres[i];
+            // console.log(genre);
+            results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
+        }
+
+        //console.log(results);
+        document.getElementById("genreBookFilter").innerHTML = results;
+        document.getElementById("genreMovieFilter").innerHTML = results;
+        document.getElementById("newItemGenreFilter").innerHTML = results;
+        //document.getElementById("editItemGenreFilter").innerHTML = results;
+    })
+
+    //series drop downs
+    console.log("getting all series");
+    $.get("/series", function (data) {
+        var results = "";
+        for (var i = 0; i < data.series.length; i++) {
+            var series = data.series[i];
+            results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
+        }
+        document.getElementById("newItemSeriesFilter").innerHTML = results;
+       // document.getElementById("editItemSeriesFilter").innerHTML = results;
+    })
+
+    //author drop downs
+    console.log("getting all authors");
+    $.get("/authors", function (data) {
+        var results = "";
+        for (var i = 0; i < data.authors.length; i++) {
+            var authors = data.authors[i];
+            results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
+        }
+        document.getElementById("newItemAuthorFilter").innerHTML = results;
+        //document.getElementById("editItemAuthorFilter").innerHTML = results;
+    })
+  }
+
+
 function searchByBook() {
     console.log("Searching by book...");
     var book = $("#book").val();
@@ -42,62 +89,6 @@ function searchByMovie() {
 
     })
 }
-
-function getAllGenres() {
-    console.log("getting all genres");
-    $.get("/genres", function (data) {
-        //console.log("Back from the server with: ");
-        //console.log(data);
-
-        var results = "";
-        for (var i = 0; i < data.genres.length; i++) {
-            var genre = data.genres[i];
-            // console.log(genre);
-            results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
-        }
-
-        //console.log(results);
-        document.getElementById("genreBookFilter").innerHTML = results;
-        document.getElementById("genreMovieFilter").innerHTML = results;
-        document.getElementById("newItemGenreFilter").innerHTML = results;
-        //document.getElementById("editItemGenreFilter").innerHTML = results;
-    })
-}
-
-function getAllSeries() {
-    console.log("getting all series");
-    $.get("/series", function (data) {
-        console.log("Back from the server with series: ");
-        console.log(data);
-        var results = "";
-        for (var i = 0; i < data.series.length; i++) {
-            var series = data.series[i];
-            // console.log(genre);
-            results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
-        }
-        document.getElementById("newItemSeriesFilter").innerHTML = results;
-       // document.getElementById("editItemSeriesFilter").innerHTML = results;
-    })
-
-}
-
-function getAllAuthors() {
-    console.log("getting all authors");
-    $.get("/authors", function (data) {
-        console.log("Back from the server with authors: ");
-        console.log(data);
-        var results = "";
-        for (var i = 0; i < data.authors.length; i++) {
-            var authors = data.authors[i];
-            // console.log(genre);
-            results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
-        }
-        document.getElementById("newItemAuthorFilter").innerHTML = results;
-        //document.getElementById("editItemAuthorFilter").innerHTML = results;
-    })
-
-}
-
 
 function filterByBook() {
     console.log("filtering Books...");
