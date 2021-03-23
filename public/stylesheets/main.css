@@ -35,6 +35,11 @@ button{
     margin-left: 15px;
 }
 
+#errorMessage{
+    color: red;
+    text-align: center;
+}
+
 
 .layout {
     display: grid;

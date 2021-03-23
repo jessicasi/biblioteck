@@ -35,7 +35,6 @@ function insertNewBook(newBook, callback) {
 
 function checkExisitingGenres(genre, callback) {
 
-    //console.log(genre);
     var sql = "SELECT genre_name FROM genre WHERE genre_name = $1::text";
     var params = [genre];
 

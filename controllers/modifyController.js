@@ -19,15 +19,14 @@ function addNewGenre(req, res) {
     //console.log(req);
     var genre = req.body.genre;
 
-    //console.log(genre);
-
-    //check for exisiting genre
+ 
 
     modifyModel.checkExisitingGenres(genre, function (error, results) {
             //console.log(results);
             if (results == 1) {
                 var message = {
-                    message: "Genre Already Exists"
+                    duplicate: "true",
+                    message: genre + " Genre Already Exists"
                 };
                 res.json(message);
             } else {
@@ -52,18 +51,14 @@ function addNewGenre(req, res) {
 
 function addNewSeries(req, res){
     console.log("adding new series");
-    //console.log(req);
+
     var series = req.body.series;
 
-    //console.log(genre);
-
-    //check for exisiting genre
-
     modifyModel.checkExisitingSeries(series, function (error, results) {
-            //console.log(results);
             if (results == 1) {
                 var message = {
-                    message: "Series Already Exists"
+                    duplicate: "true",
+                    message: series + " Series Already Exists"
                 };
                 res.json(message);
             } else {
@@ -92,15 +87,11 @@ function addNewAuthor(req, res){
     //console.log(req);
     var author = req.body.author;
 
-    //console.log(genre);
-
-    //check for exisiting genre
-
     modifyModel.checkExisitingAuthors(author, function (error, results) {
-            //console.log(results);
             if (results == 1) {
                 var message = {
-                    message: "Author Already Exists"
+                    duplicate: "true",
+                    message: author + " Author Already Exists"
                 };
                 res.json(message);
             } else {

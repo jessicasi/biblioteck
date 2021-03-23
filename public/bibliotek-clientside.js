@@ -1,4 +1,4 @@
-window.onload=setUpDropDowns;
+window.onload = setUpDropDowns;
 
 function setUpDropDowns() {
 
@@ -28,7 +28,7 @@ function setUpDropDowns() {
             results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
         }
         document.getElementById("newItemSeriesFilter").innerHTML = results;
-       // document.getElementById("editItemSeriesFilter").innerHTML = results;
+        // document.getElementById("editItemSeriesFilter").innerHTML = results;
     })
 
     //author drop downs
@@ -42,7 +42,7 @@ function setUpDropDowns() {
         document.getElementById("newItemAuthorFilter").innerHTML = results;
         //document.getElementById("editItemAuthorFilter").innerHTML = results;
     })
-  }
+}
 
 
 function searchByBook() {
@@ -89,6 +89,54 @@ function searchByMovie() {
 
     })
 }
+
+function getAllGenres() {
+    console.log("getting all genres");
+    $.get("/genres", function (data) {
+        var results = "";
+        for (var i = 0; i < data.genres.length; i++) {
+            var genre = data.genres[i];
+            results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
+        }
+        document.getElementById("genreBookFilter").innerHTML = results;
+        document.getElementById("genreMovieFilter").innerHTML = results;
+        document.getElementById("newItemGenreFilter").innerHTML = results;
+        //document.getElementById("editItemGenreFilter").innerHTML = results;
+    })
+}
+
+function getAllSeries() {
+    console.log("getting all series");
+    $.get("/series", function (data) {
+        console.log("Back from the server with series: ");
+        console.log(data);
+        var results = "";
+        for (var i = 0; i < data.series.length; i++) {
+            var series = data.series[i];
+            results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
+        }
+        document.getElementById("newItemSeriesFilter").innerHTML = results;
+        // document.getElementById("editItemSeriesFilter").innerHTML = results;
+    })
+
+}
+
+function getAllAuthors() {
+    console.log("getting all authors");
+    $.get("/authors", function (data) {
+        console.log("Back from the server with authors: ");
+        console.log(data);
+        var results = "";
+        for (var i = 0; i < data.authors.length; i++) {
+            var authors = data.authors[i];
+            results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
+        }
+        document.getElementById("newItemAuthorFilter").innerHTML = results;
+        //document.getElementById("editItemAuthorFilter").innerHTML = results;
+    })
+
+}
+
 
 function filterByBook() {
     console.log("filtering Books...");
@@ -166,62 +214,76 @@ function addNewItem() {
 }
 
 function newGenre() {
-    console.log("adding new genre");
+    //console.log("adding new genre");
+    document.getElementById("errorMessage").innerHTML = "";
     var genre = $("#addNewGenre").val();
 
-    //console.log(genre);
+    document.getElementById("addNewGenre").value = "";
 
-    $.post("/addGenre", {
-        genre: genre
-    }, function (data) {
-        if (data.message) {
-            getAllGenres();
-            document.getElementById("errorMessage").innerHTML = data.message;
-        } else {
-            //console.log("made it to add new genre check");
-        }
+    if (!genre || genre == "New Genre") {
+        document.getElementById("errorMessage").innerHTML = "Please enter a valid genre name";
 
-    })
+    } else
+
+
+        $.post("/addGenre", {
+            genre: genre
+        }, function (data) {
+            if (data.duplicate) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+            } else {
+                getAllGenres();
+                //console.log("made it to add new genre check");
+            }
+
+        })
 
 }
 
 function newSeries() {
-    console.log("adding new series");
+    document.getElementById("errorMessage").innerHTML = "";
     var series = $("#addNewSeries").val();
+    document.getElementById("addNewSeries").value = "";
 
-    console.log(series);
+    if (!series || series == "New Series") {
+        document.getElementById("errorMessage").innerHTML = "Please enter a valid series name";
 
-    $.post("/addSeries", {
-        series: series
-    }, function (data) {
-        if (data.message) {
-            getAllSeries();
-            document.getElementById("errorMessage").innerHTML = data.message;
-        } else {
-            //console.log("made it to add new genre check");
-        }
+    } else {
+        $.post("/addSeries", {
+            series: series
+        }, function (data) {
+            if (data.duplicate) {
+                document.getElementById("errorMessage").innerHTML = data.message;
 
-    })
+            } else {
+                getAllSeries();
+            }
 
+        })
 
+    }
 }
 
 function newAuthor() {
-    console.log("adding new author");
+    document.getElementById("errorMessage").innerHTML = "";
     var author = $("#addNewAuthor").val();
+    document.getElementById("addNewAuthor").value = "";
 
-    console.log(author);
+    if (!author || author == "New Author") {
+        document.getElementById("errorMessage").innerHTML = "Please enter a valid author name";
 
-    $.post("/addAuthor", {
-        author: author
-    }, function (data) {
-        if (data.message) {
-            getAllAuthors();
-            document.getElementById("errorMessage").innerHTML = data.message;
-        } else {
-            //console.log("made it to add new genre check");
-        }
+    } else {
 
-    })
+        $.post("/addAuthor", {
+            author: author
+        }, function (data) {
+            if (data.duplicate) {
+                document.getElementById("errorMessage").innerHTML = data.message;
 
+            } else {
+                getAllAuthors();
+            }
+
+        })
+    }
 }
