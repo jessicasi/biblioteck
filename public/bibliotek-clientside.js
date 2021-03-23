@@ -185,7 +185,7 @@ function newGenre() {
     }, function (data) {
         if (data.message) {
             getAllGenres();
-            document.getElementById("ulBibliotek").innerHTML = data.message;
+            document.getElementById("errorMessage").innerHTML = data.message;
         } else {
             //console.log("made it to add new genre check");
         }
@@ -205,7 +205,7 @@ function newSeries() {
     }, function (data) {
         if (data.message) {
             getAllSeries();
-            document.getElementById("ulBibliotek").innerHTML = data.message;
+            document.getElementById("errorMessage").innerHTML = data.message;
         } else {
             //console.log("made it to add new genre check");
         }
@@ -226,7 +226,7 @@ function newAuthor() {
     }, function (data) {
         if (data.message) {
             getAllAuthors();
-            document.getElementById("ulBibliotek").innerHTML = data.message;
+            document.getElementById("errorMessage").innerHTML = data.message;
         } else {
             //console.log("made it to add new genre check");
         }
