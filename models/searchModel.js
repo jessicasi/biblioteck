@@ -1,6 +1,7 @@
 const {
     Pool
 } = require("pg");
+const { viewAllSeries } = require("../controllers/searchController");
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -118,10 +119,10 @@ function getAllAuthors(callback){
     )
 }
 
-function getAllBooks(callback){
+function viewBooks(callback){
     console.log("building book lists");
 
-    var sql = "SELECT book_id, book_name FROM book ORDER BY book_name ASC ";
+    var sql = "SELECT book_id, book_name, author_name, series.series_id, series_name FROM book JOIN author on book.author_id = author.author_id JOIN series on book.series_id = series.series_id ORDER BY book_name ASC ";
 
     pool.query(sql, function (err, result) {
         if (err) {
@@ -153,6 +154,42 @@ function getAllBooks(callback){
 
 )
 
+}
+
+function viewMovies(callback){
+    console.log("building movie lists");
+
+    var sql = "SELECT movie_id, movie_name, series.series_id, series_name FROM movie JOIN series on movie.series_id = series.series_id ORDER BY movie_name ASC ";
+
+    pool.query(sql, function (err, result) {
+        if (err) {
+            console.log("unable to generate movie list");
+            console.log(err);
+            callback(err, null);
+        }
+        pool.query(sql, function (err, db_results) {
+            if (err) {
+                console.log("An error with the database occurred");
+                console.log(err);
+                callback(err, null);
+            } else {
+                console.log(db_results.rows);
+                string = JSON.stringify(db_results.rows);
+
+                var results = {
+                    success: true,
+                    movies: db_results.rows
+                };
+
+               // console.log(results);
+                callback(null, results);
+
+            }
+        });
+    }
+
+
+)
 }
 
 
@@ -210,13 +247,14 @@ function searchByMovie(movie, callback) {
 
 
 
-/* function getAllMovies() {
-    //Get all the movies from the DB
 
-    //put function here
+function viewSeries(callback){
+    
+}
 
-    //return results
-}*/
+function viewAuthors(callback){
+    
+}
 
 module.exports = {
     getAllGenres: getAllGenres,
@@ -224,5 +262,8 @@ module.exports = {
     searchByMovie: searchByMovie,
     getAllSeries:getAllSeries,
     getAllAuthors:getAllAuthors,
-    getAllBooks:getAllBooks
+    viewBooks:viewBooks,
+    viewMovies:viewMovies,
+    viewSeries:viewSeries,
+    viewAuthors:viewAuthors
 }

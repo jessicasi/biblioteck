@@ -15,8 +15,8 @@ function insertNewBook(newBook, callback) {
     //create new book
     console.log("inserting new book...");
 
-    var sql = "INSERT INTO book(book_name, genre_id, author_id) VALUES($1::text, $2::int, $3::int)";
-    var params = [newBook.book_name, newBook.genre_id, newBook.author_id];
+    var sql = "INSERT INTO book(book_name, genre_id, series_id, author_id) VALUES($1::text, $2::int, $3::int, $4::int)";
+    var params = [newBook.book_name, newBook.genre_id, newBook.series_id, newBook.author_id];
     pool.query(sql, params, function (err, db_results) {
         if (err) {
             console.log("An error with the database occurred");
@@ -31,6 +31,28 @@ function insertNewBook(newBook, callback) {
         }
     });
 
+}
+
+function insertNewMovie(newMovie, callback) {
+    console.log("inserting new movie")
+
+    var sql = "INSERT INTO movie(movie_name, genre_id, series_id) VALUES($1::text, $2::int, $3::int)";
+    var params = [newMovie.movie_name, newMovie.genre_id, newMovie.series_id];
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            var results = {
+                success: true
+            };
+            console.log(results);
+            callback(null, results);
+        }
+    });
+
+    
 }
 
 function checkExisitingGenres(genre, callback) {
@@ -51,17 +73,20 @@ function checkExisitingGenres(genre, callback) {
 }
 
 function addNewGenre(genre, callback) {
+
+    console.log("modify model" + genre);
     var sql = "INSERT INTO genre (genre_name) VALUES ($1::text)";
     var params = [genre];
 
     pool.query(sql, params, function (err, db_results) {
         if (err) {
-            console.log("An error with the database 1 occurred");
+            console.log("An error with the database ccurred");
             console.log(err);
             callback(err, null);
         } else {
             callback(null, db_results.rowCount);
         }
+
     })
 
 }
@@ -73,7 +98,7 @@ function checkExisitingSeries(series, callback) {
 
     pool.query(sql, params, function (err, db_results) {
         if (err) {
-            console.log("An error with the database 1 occurred");
+            console.log("An error with the database occurred");
             console.log(err);
             callback(err, null);
         } else {
@@ -87,6 +112,7 @@ function checkExisitingSeries(series, callback) {
 function addNewSeries(series, callback) {
 
     var sql = "INSERT INTO series (series_name) VALUES ($1::text)";
+    var sql2 = "SELECT series_id FROM series WHERE series_name = ($1::text)";
     var params = [series];
 
     pool.query(sql, params, function (err, db_results) {
@@ -95,13 +121,25 @@ function addNewSeries(series, callback) {
             console.log(err);
             callback(err, null);
         } else {
-            callback(null, db_results.rowCount);
+            pool.query(sql, params, function (err, db2_results) {
+                if (err) {
+                    console.log("An error with the database 2 occurred");
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    var results = {
+                        success: db_results.rowCount,
+                        series: db2_results.rows
+                    };
+                    callback(null, results);
+                }
+            })
         }
     })
 
 }
 
-function checkExisitingAuthors(author, callback){
+function checkExisitingAuthors(author, callback) {
     var sql = "SELECT author_name FROM author WHERE author_name = $1::text";
     var params = [author];
 
@@ -117,7 +155,7 @@ function checkExisitingAuthors(author, callback){
     });
 }
 
-function addNewAuthor(author, callback){
+function addNewAuthor(author, callback) {
     var sql = "INSERT INTO author (author_name) VALUES ($1::text)";
     var params = [author];
 
@@ -133,10 +171,6 @@ function addNewAuthor(author, callback){
 
 }
 
-function insertNewMovie() {
-    //create new movie
-}
-
 
 module.exports = {
     insertNewBook: insertNewBook,
@@ -145,6 +179,6 @@ module.exports = {
     addNewGenre: addNewGenre,
     checkExisitingSeries: checkExisitingSeries,
     addNewSeries: addNewSeries,
-    checkExisitingAuthors:checkExisitingAuthors,
-    addNewAuthor:addNewAuthor
+    checkExisitingAuthors: checkExisitingAuthors,
+    addNewAuthor: addNewAuthor
 }

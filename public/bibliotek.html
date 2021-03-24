@@ -22,13 +22,16 @@
 
     <div id="booksDiv">
       <h2>Book & Movie Library</h2>
+      <label>Filter</label>
       <select id="genreFilter">
 
       </select>
       <button onclick="filterByBook()">Filter Books</button>
       <button onclick="filterByMovie()">Filter Movies</button><br>
-      <input type="text" id="book" placeholder="Book"><button onclick="searchByBook()">Search By Book</button><br>
-      <input type="text" id="movie" placeholder="Movie"><button onclick="searchByMovie()">Search By Movie</button>
+      <label>Search</label>
+      <input type="text" id="searchItem" placeholder="Search">
+      <button onclick="searchByBook()">Search Books</button>
+      <button onclick="searchByMovie()">Search Movies</button>
     </div>
 
     <div id="results">
@@ -41,7 +44,7 @@
     <div id="modifyDiv">
       <h2>Add Book or Movie</h2>
       <div id="errorMessage"></div>
-      <label>Item Type</label>
+      <label>Item </label>
       <select id="addType" onchange="showAuthor('hiddenAuthor', this)">
         <option value="book">Book</option>
         <option value="movie">Movie</option>
@@ -51,69 +54,53 @@
       <label>Genre</label>
       <select id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
       <div id="hiddenGenre">
-      <label>New Genre Name</label>
-      <input type="text" id="addNewGenre" placeholder="New Genre">
+        <label>New Genre</label>
+        <input type="text" id="addNewGenre" placeholder="New Genre">
+        <button onclick="newGenre()">Add</button>
       </div><br>
       <label>Series</label>
       <select id="newItemSeriesFilter" onchange="showNewSeries('hiddenSeries', this)"></select><br>
       <div id="hiddenSeries">
-        <label>New Series Name</label>
+        <label>New Series</label>
         <input type="text" id="addNewSeries" placeholder="Series Name">
+        <button onclick="newSeries()">Add</button>
       </div>
       <!--       <label>Location</label>
       <input type="text" id="newLocationName" placeholder="Series Name"><br> -->
       <!-- Add location in here as well, and perhaps image -->
       <div id="hiddenAuthor">
-        <label>Author Name</label>
-        <select id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)" ></select>
+        <label>Author</label>
+        <select id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)"></select>
         <div id="hiddenNewAuthor">
-          <label>New Author Name</label>
+          <label>New Author</label>
           <input type="text" id="addNewAuthor" placeholder="Author Name">
+          <button onclick="newAuthor()">Add</button>
         </div>
 
       </div>
       <button onclick="addNewItem()">Add Item</button>
 
-    
-    <hr>
-
-    <h3>Administrative</h3>
-   <!--  <div id="errorMessage"></div> -->
-  <!--   <label> Add New Genre</label></br>
-    <input type="text" id="addNewGenre" placeholder="New Genre">
-    <button onclick="newGenre()">Add New Genre</button><br>
-    <label>Add New Series</label></br>
-    <input type="text" id="addNewSeries" placeholder="Series Name">
-    <button onclick="newSeries()">Add New Series</button><br>
-    <label>Add New Author</label><br>
-    <input type="text" id="addNewAuthor" placeholder="Author Name"><button onclick="newAuthor()">Add New
-      Author</button>
-    </div> -->
-
-    <!-- <h2>Modify Book or Movie</h2>
-    <label>Item Type</label>
-    <select id="editType" onchange="setInfo('hideAuthor', this)">
-      <option value="choose">Choose Type</option>
-      <option value="book">Book</option>
-      <option value="movie">Movie</option>
-    </select><br>
-    <label>Name</label>
-    <select id="modifyFilter"></select>
-    <label>Genre</label>
-    <select id="editItemGenreFilter"></select>
-    <label>Series</label>
-    <select id="editItemSeriesFilter"></select><br>
-
-           <label>Location</label>
-      <input type="text" id="newLocationName" placeholder="Series Name"><br> -->
-    <!-- Add location in here as well, and perhaps image -->
-    <!--     <div id="hideAuthor">
-      <label>Author Name</label>
-      <select id="editItemAuthorFilter"></select>
     </div>
-    <button onclick="addNewItem()">Add Item</button> -->
+    <hr>
+    <div id="viewAll">
+      <h2>View all to Edit/Delete</h2>
+      <select id="viewAllSelect">
+        <option value="books">Books</option>
+        <option value="movies">Movies</option>
+        <option value="series">Series</option>
+        <option value="authors">Authors</option>
+      </select>
+      <button onclick="viewAll()">View All</button>
 
-  </div>
+    </div>
+    <div id="results">
+      <h2>Search Results</h2>
+      <ul id="ulModify">
+
+      </ul>
+    </div>
+
+
 
   </div>
 </body>

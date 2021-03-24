@@ -13,13 +13,25 @@ function addNewBook(req, res) {
         res.json(results);
     });
 }
+function addNewMovie(req,res){
+    console.log("adding new movie ...")
+
+    var newMovie = req.body.newMovie;
+    //console.log("New Book Variable: " + newBook.genre_id + newBook.book_name + newBook.author_name);
+
+    modifyModel.insertNewMovie(newMovie, function (error, results) {
+
+        console.log("results from the DB are:" + results);
+        res.json(results);
+    });
+
+}
+
 
 function addNewGenre(req, res) {
     console.log("adding new genre");
     //console.log(req);
     var genre = req.body.genre;
-
- 
 
     modifyModel.checkExisitingGenres(genre, function (error, results) {
             //console.log(results);
@@ -31,25 +43,23 @@ function addNewGenre(req, res) {
                 res.json(message);
             } else {
                 modifyModel.addNewGenre(genre, function (error, results) {
-                    if (results == 0) {
+                    if (results.success == 0) {
                         var message = {
                             message: "Error with Database, Genre not added"
+
                         };
-                    } else {
-                        var message = {
-                            message: "New Genre Added!"
-                        };
+                        res.json(message);
                     }
-                    res.json(message);
+                    res.json(results);
                 })
             }
-           
+
         }
 
     )
 }
 
-function addNewSeries(req, res){
+function addNewSeries(req, res) {
     console.log("adding new series");
 
     var series = req.body.series;
@@ -63,26 +73,23 @@ function addNewSeries(req, res){
                 res.json(message);
             } else {
                 modifyModel.addNewSeries(series, function (error, results) {
-                    if (results == 0) {
+                    if (results.sucess == 0) {
                         var message = {
                             message: "Error with Database, Series not added"
                         };
-                    } else {
-                        var message = {
-                            message: "New Series Added!"
-                        };
-                    }
-                    res.json(message);
+                        res.json(message);
+                    } 
+                    res.json(results);
                 })
             }
-           
+
         }
 
     )
 
 }
 
-function addNewAuthor(req, res){
+function addNewAuthor(req, res) {
     console.log("adding new author");
     //console.log(req);
     var author = req.body.author;
@@ -108,7 +115,7 @@ function addNewAuthor(req, res){
                     res.json(message);
                 })
             }
-           
+
         }
 
     )
@@ -123,7 +130,8 @@ function addNewAuthor(req, res){
 module.exports = {
     addNewBook: addNewBook,
     addNewGenre: addNewGenre,
-    addNewSeries:addNewSeries,
-    addNewAuthor:addNewAuthor
+    addNewSeries: addNewSeries,
+    addNewAuthor: addNewAuthor,
+    addNewMovie :addNewMovie
 
 }

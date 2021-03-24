@@ -24,6 +24,7 @@ h1, h2, h3{
 input, select {
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 75%;
 }
 
 button{

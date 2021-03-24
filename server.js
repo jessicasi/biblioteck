@@ -27,17 +27,15 @@ app.get("/searchBook", searchController.searchBook)
 app.get("/searchMovie", searchController.searchMovie)
 app.get("/filterMovies", filterController.filterMovies)
 app.get("/allBooks", searchController.getAllBooks)
+app.get("/viewAllBooks", searchController.viewAllBooks)
+app.get("/viewAllMovies", searchController.viewAllMovies)
 
-
-
-app.post("/addBook", modifyController.addNewBook)
+//POST
+app.post("/addBook", modifyController.addNewBook);
+app.post("/addMovie", modifyController.addNewMovie);
 app.post("/addGenre", modifyController.addNewGenre);
 app.post("/addSeries", modifyController.addNewSeries)
 app.post("/addAuthor", modifyController.addNewAuthor)
-
-app.post('/movie', function (req, res) {
-
-});
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
