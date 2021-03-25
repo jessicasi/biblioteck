@@ -44,6 +44,7 @@ function searchBook(req, res) {
 
     searchModel.searchByBook(book, function (error, results) {
 
+
         console.log("results from the DB are:" + results);
         res.json(results);
     });

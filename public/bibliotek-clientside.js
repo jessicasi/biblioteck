@@ -157,12 +157,15 @@ function searchByBook() {
         console.log("Back from the server with: ");
         console.log(data);
         //console.log(data.books);
-
-        for (var i = 0; i < data.books.length; i++) {
-            var book = data.books[i];
-            console.log(book);
-            //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
-            document.getElementById("ulBibliotek").innerHTML = "<li>" + book.book_name + " " + book.author_name + "</li>";
+        if (!data.books.length) {
+            document.getElementById("ulBibliotek").innerHTML = "No books can be found";
+        } else {
+            for (var i = 0; i < data.books.length; i++) {
+                var book = data.books[i];
+                console.log(book);
+                //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
+                document.getElementById("ulBibliotek").innerHTML = "<li>" + book.book_name + " " + book.author_name + "</li>";
+            }
         }
 
     })
@@ -177,10 +180,14 @@ function searchByMovie() {
     $.get("/searchMovie", {
         movie: movie
     }, function (data) {
+        if (!data.movies.length) {
+            document.getElementById("ulBibliotek").innerHTML = "No movies can be found";
+        } else {
         for (var i = 0; i < data.movie.length; i++) {
             var movie = data.movie[i];
             document.getElementById("ulBibliotek").innerHTML = "<li>" + movie.movie_name + "</li>";
         }
+    }
 
     })
 }
