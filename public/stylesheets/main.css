@@ -64,7 +64,7 @@ input, select {
     margin-bottom: 0;
 }
 
-.addNewBtn {
+button {
     background-color: #403333;
     color: #D9D7D7;
     outline: none;
@@ -73,11 +73,11 @@ input, select {
     box-shadow: 2px 2px #999;
 }
 
-.addNewBtn:hover {
+button:hover {
     background-color: #8C7D7B;
 }
 
-.addNewBtn:active {
+button:active {
     background-color: #8C7D7B;
     box-shadow: 0 3px #666;
     transform: translateY(4px);

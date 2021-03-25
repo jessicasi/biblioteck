@@ -2,4 +2,3 @@ node_modules/
 .env
 bibliotekDB.sql
 searchmovie.html
-node_modules/bootstrap
