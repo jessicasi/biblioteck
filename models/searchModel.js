@@ -1,7 +1,6 @@
 const {
     Pool
 } = require("pg");
-const { viewAllSeries } = require("../controllers/searchController");
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -194,21 +193,15 @@ function viewMovies(callback){
 
 
 function searchByBook(book, callback) {
-    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book_name = $1::text";
+    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book_name ILIKE $1::text";
 
-
-    //var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book.genre_id = $1::int";
-    //var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
-    var params = [book];
-    var string = "";
+    var params = ['%' + book + '%'];
     pool.query(sql, params, function (err, db_results) {
         if (err) {
             console.log("An error with the database occurred");
             console.log(err);
             callback(err, null);
         } else {
-            console.log(db_results.rows);
-            string = JSON.stringify(db_results.rows);
             var results = {
                 success: true,
                 books: db_results.rows
@@ -222,9 +215,9 @@ function searchByBook(book, callback) {
 }
 
 function searchByMovie(movie, callback) {
-    var sql = "SELECT movie_id,movie_name FROM movie WHERE movie_name = $1::text";
+    var sql = "SELECT movie_id,movie_name FROM movie WHERE movie_name ILIKE $1::text";
 
-    var params = [movie];
+    var params = ['%' + movie + '%'];
     pool.query(sql, params, function (err, db_results) {
         if (err) {
             console.log("An error with the database occurred");
