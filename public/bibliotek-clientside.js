@@ -188,7 +188,7 @@ function searchByMovie() {
         $.get("/searchMovie", {
             movie: movie
         }, function (data) {
-            if (!data.movies.length) {
+            if (!data.movie.length) {
                 document.getElementById("ulBibliotek").innerHTML = "No movies can be found";
             } else {
                 for (var i = 0; i < data.movie.length; i++) {
