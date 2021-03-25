@@ -86,7 +86,7 @@ function modifyMovieDropDowns(genre_id, series_id, callback) {
 
 }
 
-function modifyBookDropDowns(genre_id, series_id, author_id, callback){
+function modifyBookDropDowns(genre_id, series_id, author_id, callback) {
     console.log("modify drop downs genre id : " + genre_id + "and series_id:  " + series_id);
     //Genre drop downs
     $.get("/genres", function (data) {
@@ -130,12 +130,12 @@ function modifyBookDropDowns(genre_id, series_id, author_id, callback){
         for (var i = 0; i < data.authors.length; i++) {
             var authors = data.authors[i];
 
-            if(authors.author_id == author_id){
+            if (authors.author_id == author_id) {
                 results += " <option value='" + authors.author_id + "' selected>" + authors.author_name + "</option>";
-            }else {
-            results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
+            } else {
+                results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
+            }
         }
-    }
 
         document.getElementById("modBookAuthor").innerHTML = results;
 
@@ -231,7 +231,7 @@ function getAllAuthors(callback) {
             var authors = data.authors[i];
             results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
         }
-        results += " <option value='new'> Add New Series </option>";
+        results += " <option value='new'> Add New Author </option>";
         document.getElementById("newItemAuthorFilter").innerHTML = results;
         //document.getElementById("editItemAuthorFilter").innerHTML = results;
         callback(null);
@@ -295,7 +295,8 @@ function showNewAuthor(divId, element) {
 
 function addNewItem() {
     console.log("adding item");
-    document.getElementById("errorMessage").innerHTML = "";
+    document.getElementById("errorAdd").innerHTML = "";
+    document.getElementById("successAdd").innerHTML = "";
     document.getElementById("newItemName").innerHTML = "";
 
     var itemType = $("#addType").val();
@@ -345,24 +346,30 @@ function addNewItem() {
 
 function newGenre() {
     //console.log("adding new genre");
-    document.getElementById("errorMessage").innerHTML = "";
+    document.getElementById("errorAdd").innerHTML = "";
+    document.getElementById("successAdd").innerHTML = "";
     var genre = $("#addNewGenre").val();
 
     document.getElementById("addNewGenre").value = "";
 
     if (!genre || genre == "New Genre") {
-        document.getElementById("errorMessage").innerHTML = "Please enter a valid genre name";
+        document.getElementById("errorAdd").innerHTML = "Please enter a valid genre name";
 
     } else
         $.post("/addGenre", {
             genre: genre
         }, function (data) {
             if (data.duplicate) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                document.getElementById("errorAdd").innerHTML = data.errorMessage;
             } else {
                 getAllGenres(function () {
-                    setSelectedIndex(document.getElementById("newItemGenreFilter"), genre);
-                    document.getElementById("hiddenGenre").style.display = "none";
+                    if (data.errorMessage) {
+                        document.getElementById("errorAdd").innerHTML = data.errorMessage
+                    } else {
+                        document.getElementById("successAdd").innerHTML = data.successMessage
+                        setSelectedIndex(document.getElementById("newItemGenreFilter"), genre);
+                        document.getElementById("hiddenGenre").style.display = "none";
+                    }
                 })
             }
         })
@@ -381,24 +388,30 @@ function setSelectedIndex(s, v) {
 }
 
 function newSeries() {
-    document.getElementById("errorMessage").innerHTML = "";
+    document.getElementById("errorAdd").innerHTML = "";
+    document.getElementById("successAdd").innerHTML = "";
     var series = $("#addNewSeries").val();
     document.getElementById("addNewSeries").value = "";
 
     if (!series || series == "New Series") {
-        document.getElementById("errorMessage").innerHTML = "Please enter a valid series name";
+        document.getElementById("errorAdd").innerHTML = "Please enter a valid series name";
 
     } else {
         $.post("/addSeries", {
             series: series
         }, function (data) {
             if (data.duplicate) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                document.getElementById("errorAdd").innerHTML = data.errorMessage;
 
             } else {
                 getAllSeries(function () {
-                    setSelectedIndex(document.getElementById("newItemSeriesFilter"), series);
-                    document.getElementById("hiddenSeries").style.display = "none";
+                    if (data.errorMessage) {
+                        document.getElementById("errorAdd").innerHTML = data.errorMessage
+                    } else {
+                        document.getElementById("successAdd").innerHTML = data.successMessage
+                        setSelectedIndex(document.getElementById("newItemSeriesFilter"), series);
+                        document.getElementById("hiddenSeries").style.display = "none";
+                    }
                 });
             }
 
@@ -408,12 +421,13 @@ function newSeries() {
 }
 
 function newAuthor() {
-    document.getElementById("errorMessage").innerHTML = "";
+    document.getElementById("errorAdd").innerHTML = "";
+    document.getElementById("successAdd").innerHTML = "";
     var author = $("#addNewAuthor").val();
     document.getElementById("addNewAuthor").value = "";
 
     if (!author || author == "New Author") {
-        document.getElementById("errorMessage").innerHTML = "Please enter a valid author name";
+        document.getElementById("errorAdd").innerHTML = "Please enter a valid author name";
 
     } else {
 
@@ -421,12 +435,17 @@ function newAuthor() {
             author: author
         }, function (data) {
             if (data.duplicate) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                document.getElementById("errorAdd").innerHTML = data.errorMessage;
 
             } else {
                 getAllAuthors(function () {
-                    setSelectedIndex(document.getElementById("newItemAuthorFilter"), author);
-                    document.getElementById("hiddenNewAuthor").style.display = "none";
+                    if (data.errorMessage) {
+                        document.getElementById("errorAdd").innerHTML = data.errorMessage
+                    } else {
+                        document.getElementById("successAdd").innerHTML = data.successMessage
+                        setSelectedIndex(document.getElementById("newItemAuthorFilter"), author);
+                        document.getElementById("hiddenNewAuthor").style.display = "none";
+                    }
                 });
             }
 
@@ -522,7 +541,8 @@ function viewAll() {
     }
 
 }
-function modifyBook(book_id, book_name, series_id, genre_id, author_id){
+
+function modifyBook(book_id, book_name, series_id, genre_id, author_id) {
 
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
@@ -541,7 +561,7 @@ function modifyBook(book_id, book_name, series_id, genre_id, author_id){
 }
 
 function modifyMovie(movie_id, movie_name, series_id, genre_id) {
-    
+
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
     var series_id = series_id;
@@ -607,7 +627,11 @@ function updateMovie(movie_id) {
     $.post("/updateMovie", {
         movieUpdate: movieUpdate
     }, function (data) {
-        document.getElementById("errorMessage").innerHTML = data.message;
+        if (data.errorMessage) {
+            document.getElementById("errorMod").innerHTML = data.errorMessage;
+        } else {
+            document.getElementById("successMod").innerHTML = data.successMessage;
+        }
         document.getElementById("hiddenEdit").style.display = "none";
         document.getElementById("ulModify").innerHTML = "";
         document.getElementById("ulModify").style.display = "none";
@@ -617,7 +641,7 @@ function updateMovie(movie_id) {
 
 }
 
-function updateBook(book_id){
+function updateBook(book_id) {
     var book_id = book_id
     var book_name = $("#bookNameUpdate").val();
     var genre_id = $("#modBookGenre").val();
@@ -629,13 +653,17 @@ function updateBook(book_id){
         book_name: book_name,
         genre_id: genre_id,
         series_id: series_id,
-        author_id:author_id
+        author_id: author_id
     }
 
     $.post("/updateBook", {
         bookUpdate: bookUpdate
     }, function (data) {
-        document.getElementById("errorMessage").innerHTML = data.message;
+        if (data.errorMessage) {
+            document.getElementById("errorMod").innerHTML = data.errorMessage;
+        } else {
+            document.getElementById("successMod").innerHTML = data.successMessage;
+        }
         document.getElementById("hiddenEdit").style.display = "none";
         document.getElementById("ulModify").innerHTML = "";
         document.getElementById("ulModify").style.display = "none";
@@ -662,7 +690,11 @@ function update(id, type) {
             $.post("/updateGenre", {
                 newGenre: newGenre
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllGenres(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";
@@ -680,7 +712,11 @@ function update(id, type) {
             $.post("/updateSeries", {
                 newSeries: newSeries
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllSeries(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";
@@ -698,7 +734,11 @@ function update(id, type) {
             $.post("/updateAuthor", {
                 newAuthor: newAuthor
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllAuthors(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";
@@ -716,24 +756,32 @@ function delMovie(movie_id) {
     $.post("/deleteMovie", {
         movie_id: movie_id
     }, function (data) {
-        document.getElementById("errorMessage").innerHTML = data.message;
+        if (data.errorMessage) {
+            document.getElementById("errorMod").innerHTML = data.errorMessage;
+        } else {
+            document.getElementById("successMod").innerHTML = data.successMessage;
+        }
         document.getElementById("hiddenEdit").style.display = "none";
         document.getElementById("ulModify").innerHTML = "";
         document.getElementById("ulModify").style.display = "none";
-})
+    })
 }
 
-function delBook(book_id){
+function delBook(book_id) {
     var book_id = book_id;
 
     $.post("/deleteBook", {
         book_id: book_id
     }, function (data) {
-        document.getElementById("errorMessage").innerHTML = data.message;
+        if (data.errorMessage) {
+            document.getElementById("errorMod").innerHTML = data.errorMessage;
+        } else {
+            document.getElementById("successMod").innerHTML = data.successMessage;
+        }
         document.getElementById("hiddenEdit").style.display = "none";
         document.getElementById("ulModify").innerHTML = "";
         document.getElementById("ulModify").style.display = "none";
-})
+    })
 
 }
 
@@ -753,7 +801,11 @@ function del(id, type) {
             $.post("/deleteGenre", {
                 deleteGenre: deleteGenre
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllGenres(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";
@@ -773,7 +825,11 @@ function del(id, type) {
             $.post("/deleteSeries", {
                 deleteSeries: deleteSeries
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllSeries(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";
@@ -793,7 +849,11 @@ function del(id, type) {
             $.post("/deleteAuthor", {
                 deleteAuthor: deleteAuthor
             }, function (data) {
-                document.getElementById("errorMessage").innerHTML = data.message;
+                if (data.errorMessage) {
+                    document.getElementById("errorMod").innerHTML = data.errorMessage;
+                } else {
+                    document.getElementById("successMod").innerHTML = data.successMessage;
+                }
                 getAllAuthors(function () {
                     document.getElementById("hiddenEdit").style.display = "none";
                     document.getElementById("ulModify").innerHTML = "";

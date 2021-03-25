@@ -39,19 +39,23 @@ function addNewGenre(req, res) {
             if (results == 1) {
                 var message = {
                     duplicate: "true",
-                    message: genre + " Genre Already Exists"
+                    erroMessage: genre + " Genre Already Exists"
                 };
                 res.json(message);
             } else {
                 modifyModel.addNewGenre(genre, function (error, results) {
                     if (results.success == 0) {
                         var message = {
-                            message: "Error with Database, Genre not added"
+                            errorMessage: "Error with Database, Genre not added"
 
+                        }
+                    } else {
+                        var message = {
+                            successMessage: "New Genre Added!"
                         };
                         res.json(message);
                     }
-                    res.json(results);
+                    //res.json(results);
                 })
             }
 
@@ -69,18 +73,22 @@ function addNewSeries(req, res) {
             if (results == 1) {
                 var message = {
                     duplicate: "true",
-                    message: series + " Series Already Exists"
+                    errorMessage: series + " Series Already Exists"
                 };
                 res.json(message);
             } else {
                 modifyModel.addNewSeries(series, function (error, results) {
                     if (results.sucess == 0) {
                         var message = {
-                            message: "Error with Database, Series not added"
+                            errorMessage: "Error with Database, Series not added"
+                        }
+                    } else {
+                        var message = {
+                            successMessage: "New Series Added!"
                         };
                         res.json(message);
                     }
-                    res.json(results);
+                    //res.json(results);
                 })
             }
 
@@ -99,18 +107,18 @@ function addNewAuthor(req, res) {
             if (results == 1) {
                 var message = {
                     duplicate: "true",
-                    message: author + " Author Already Exists"
+                    errorMessage: author + " Author Already Exists"
                 };
                 res.json(message);
             } else {
                 modifyModel.addNewAuthor(author, function (error, results) {
                     if (results == 0) {
                         var message = {
-                            message: "Error with Database, Author not added"
+                            errorMessage: "Error with Database, Author not added"
                         };
                     } else {
                         var message = {
-                            message: "New Author Added!"
+                            successMessage: "New Author Added!"
                         };
                     }
                     res.json(message);
@@ -132,18 +140,18 @@ function updateGenre(req, res) {
     modifyModel.updatingGenre(newGenre, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Genre not updated"
+                errorMessage: "Error with Database, Genre not updated"
             };
         } else {
             var message = {
-                message: "Genre Updated!"
+                successMessage: "Genre Updated!"
             };
         }
         res.json(message);
     })
 }
 
-function updateSeries (req, res){
+function updateSeries(req, res) {
     console.log("updating series")
 
     var newSeries = req.body.newSeries;
@@ -151,18 +159,18 @@ function updateSeries (req, res){
     modifyModel.updatingSeries(newSeries, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Series not updated"
+                errorMessage: "Error with Database, Series not updated"
             };
         } else {
             var message = {
-                message: "Series Updated!"
+                successMessage: "Series Updated!"
             };
         }
         res.json(message);
     })
 }
 
-function updateAuthor(req, res){
+function updateAuthor(req, res) {
     console.log("updating author")
 
     var newAuthor = req.body.newAuthor;
@@ -170,11 +178,11 @@ function updateAuthor(req, res){
     modifyModel.updatingAuthor(newAuthor, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Series not updated"
+                errorMessage: "Error with Database, Series not updated"
             };
         } else {
             var message = {
-                message: "Author Updated!"
+                successMessage: "Author Updated!"
             };
         }
         res.json(message);
@@ -182,20 +190,20 @@ function updateAuthor(req, res){
 
 }
 
-function updateMovie(req, res){
+function updateMovie(req, res) {
 
     console.log("updating movie")
 
     var movieUpdate = req.body.movieUpdate;
- 
+
     modifyModel.updatingMovie(movieUpdate, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Movie not updated"
+                errorMessage: "Error with Database, Movie not updated"
             };
         } else {
             var message = {
-                message: "Movie Updated!"
+                successMessage: "Movie Updated!"
             };
         }
         res.json(message);
@@ -203,19 +211,19 @@ function updateMovie(req, res){
 
 }
 
-function updateBook(req, res){
+function updateBook(req, res) {
     console.log("updating movie")
 
     var bookUpdate = req.body.bookUpdate;
- 
+
     modifyModel.updatingBook(bookUpdate, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Book not updated"
+                errorMessage: "Error with Database, Book not updated"
             };
         } else {
             var message = {
-                message: "Book Updated!"
+                successMessage: "Book Updated!"
             };
         }
         res.json(message);
@@ -223,18 +231,18 @@ function updateBook(req, res){
 
 }
 
-function deleteBook(req, res){
+function deleteBook(req, res) {
 
     var book_id = req.body.book_id;
-    modifyModel.deletingBook(book_id, function (error, results){
+    modifyModel.deletingBook(book_id, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Book not deleted"
+                errorMessage: "Error with Database, Book not deleted"
             };
             res.json(message);
         } else {
             var message = {
-                message: "Book was successfully deleted"
+                successMessage: "Book was successfully deleted"
             }
             res.json(message);
         }
@@ -243,17 +251,17 @@ function deleteBook(req, res){
 
 }
 
-function deleteMovie(req, res){
+function deleteMovie(req, res) {
     var movie_id = req.body.movie_id;
-    modifyModel.deletingMovie(movie_id, function (error, results){
+    modifyModel.deletingMovie(movie_id, function (error, results) {
         if (results == 0) {
             var message = {
-                message: "Error with Database, Movie not deleted"
+                errorMessage: "Error with Database, Movie not deleted"
             };
             res.json(message);
         } else {
             var message = {
-                message: "Movie was successfully deleted"
+                successMessage: "Movie was successfully deleted"
             }
             res.json(message);
         }
@@ -261,7 +269,7 @@ function deleteMovie(req, res){
     })
 }
 
-function deleteAuthor(req, res){
+function deleteAuthor(req, res) {
     console.log("check if author is in use");
 
     var author_id = req.body.deleteAuthor.author_id;
@@ -271,19 +279,19 @@ function deleteAuthor(req, res){
         if (results == 1) {
             var message = {
                 in_use: "true",
-                message: "Author: " + author_name + " is in use and cannot be deleted"
+                errorMessage: "Author: " + author_name + " is in use and cannot be deleted"
             };
             res.json(message);
         } else {
             modifyModel.deletingAuthor(author_id, function (error, results) {
                 if (results == 0) {
                     var message = {
-                        message: "Error with Database, Author not deleted"
+                        errorMessage: "Error with Database, Author not deleted"
                     };
                     res.json(message);
                 } else {
                     var message = {
-                        message: "Author was successfully deleted"
+                        successMessage: "Author was successfully deleted"
                     }
                     res.json(message);
                 }
@@ -304,19 +312,19 @@ function deleteGenre(req, res) {
         if (results == 1) {
             var message = {
                 in_use: "true",
-                message: "Genre: " + genre_name + " is in use and cannot be deleted"
+                errorMessage: "Genre: " + genre_name + " is in use and cannot be deleted"
             };
             res.json(message);
         } else {
             modifyModel.deletingGenre(genre_id, function (error, results) {
                 if (results == 0) {
                     var message = {
-                        message: "Error with Database, Genre not deleted"
+                        errorMessage: "Error with Database, Genre not deleted"
                     };
                     res.json(message);
                 } else {
                     var message = {
-                        message: "Genre was successfully deleted"
+                        successMessage: "Genre was successfully deleted"
                     }
                     res.json(message);
                 }
@@ -327,7 +335,7 @@ function deleteGenre(req, res) {
 
 }
 
-function deleteSeries(req, res){
+function deleteSeries(req, res) {
     console.log("check if series is in use");
 
     var series_id = req.body.deleteSeries.series_id;
@@ -337,19 +345,19 @@ function deleteSeries(req, res){
         if (results == 1) {
             var message = {
                 in_use: "true",
-                message: "Series: " + series_name + " is in use and cannot be deleted"
+                errorMessage: "Series: " + series_name + " is in use and cannot be deleted"
             };
             res.json(message);
         } else {
             modifyModel.deletingSeries(series_id, function (error, results) {
                 if (results == 0) {
                     var message = {
-                        message: "Error with Database, Series not deleted"
+                        errorMessage: "Error with Database, Series not deleted"
                     };
                     res.json(message);
                 } else {
                     var message = {
-                        message: "Series was successfully deleted"
+                        successMessage: "Series was successfully deleted"
                     }
                     res.json(message);
                 }
@@ -370,13 +378,13 @@ module.exports = {
     addNewMovie: addNewMovie,
     updateGenre: updateGenre,
     deleteGenre: deleteGenre,
-    updateSeries:updateSeries,
-    deleteSeries:deleteSeries,
-    updateAuthor:updateAuthor,
-    deleteAuthor:deleteAuthor,
-    updateMovie:updateMovie,
-    deleteMovie:deleteMovie,
-    updateBook:updateBook,
-    deleteBook:deleteBook
+    updateSeries: updateSeries,
+    deleteSeries: deleteSeries,
+    updateAuthor: updateAuthor,
+    deleteAuthor: deleteAuthor,
+    updateMovie: updateMovie,
+    deleteMovie: deleteMovie,
+    updateBook: updateBook,
+    deleteBook: deleteBook
 
 }

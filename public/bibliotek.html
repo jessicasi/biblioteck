@@ -43,7 +43,8 @@
 
     <div id="modifyDiv">
       <h2>Add Book or Movie</h2>
-      <div id="errorMessage"></div>
+      <div id="errorAdd"></div>
+      <div id="successAdd"></div>
       <label>Item </label>
       <select id="addType" onchange="showAuthor('hiddenAuthor', this)">
         <option value="book">Book</option>
@@ -84,6 +85,8 @@
     <hr>
     <div id="viewAll">
       <h2>View all to Edit/Delete</h2>
+      <div id="errorMod"></div>
+      <div id="successMod"></div>
       <select id="viewAllSelect">
         <option value="books">Books</option>
         <option value="movies">Movies</option>

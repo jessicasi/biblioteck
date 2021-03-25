@@ -93,6 +93,7 @@ function addNewGenre(genre, callback) {
 }
 
 function checkExisitingSeries(series, callback) {
+    console.log("checking for exsiting series name: " + series);
 
     var sql = "SELECT series_name FROM series WHERE series_name = $1::text";
     var params = [series];
@@ -113,31 +114,18 @@ function checkExisitingSeries(series, callback) {
 function addNewSeries(series, callback) {
 
     var sql = "INSERT INTO series (series_name) VALUES ($1::text)";
-    var sql2 = "SELECT series_id FROM series WHERE series_name = ($1::text)";
     var params = [series];
 
     pool.query(sql, params, function (err, db_results) {
         if (err) {
-            console.log("An error with the database 1 occurred");
+            console.log("An error with the database ccurred");
             console.log(err);
             callback(err, null);
         } else {
-            pool.query(sql, params, function (err, db2_results) {
-                if (err) {
-                    console.log("An error with the database 2 occurred");
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    var results = {
-                        success: db_results.rowCount,
-                        series: db2_results.rows
-                    };
-                    callback(null, results);
-                }
-            })
+            callback(null, db_results.rowCount);
         }
-    })
 
+    })
 }
 
 function checkExisitingAuthors(author, callback) {
