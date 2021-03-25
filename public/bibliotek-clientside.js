@@ -15,7 +15,6 @@ function setUpDropDowns() {
         //console.log(results);
         document.getElementById("genreFilter").innerHTML = results;
         document.getElementById("newItemGenreFilter").innerHTML = results;
-        //document.getElementById("editItemGenreFilter").innerHTML = results;
     })
 
     //series drop downs
@@ -28,7 +27,6 @@ function setUpDropDowns() {
 
         results += " <option value='new'> Add New Series </option>";
         document.getElementById("newItemSeriesFilter").innerHTML = results;
-        // document.getElementById("editItemSeriesFilter").innerHTML = results;
     })
 
     //author drop downs
@@ -41,8 +39,51 @@ function setUpDropDowns() {
 
         results += " <option value='new'> Add New Author </option>";
         document.getElementById("newItemAuthorFilter").innerHTML = results;
-        //document.getElementById("editItemAuthorFilter").innerHTML = results;
+
     })
+}
+
+function modifyMovieDropDowns(genre_id, series_id, callback) {
+
+    console.log("modify drop downs genre id : " + genre_id + "and series_id:  " + series_id);
+    //Genre drop downs
+    $.get("/genres", function (data) {
+        var results = "";
+        for (var i = 0; i < data.genres.length; i++) {
+            var genre = data.genres[i];
+            //console.log("cycle through genre.genre_id: " + genre.genre_id + " genre name: " + genre.genre_name);
+
+            if (genre.genre_id == genre_id) {
+                // console.log("this one matches");
+                results += " <option value='" + genre.genre_id + "' selected>" + genre.genre_name + "</option>";
+            } else {
+                results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
+            }
+        }
+        document.getElementById("modGenre").innerHTML = results;
+    })
+
+    //series drop downs
+    $.get("/series", function (data) {
+        var results = "";
+        for (var i = 0; i < data.series.length; i++) {
+            var series = data.series[i];
+            // console.log("cycle though series.series_id " + series.series_id + "series name " + series.series_name);
+            if (series.series_id == series_id) {
+                //console.log("this one matches");
+                results += " <option value='" + series.series_id + "' selected>" + series.series_name + "</option>";
+
+            } else {
+
+                results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
+            }
+        }
+        document.getElementById("modSeries").innerHTML = results;
+
+    })
+
+    callback(null);
+
 }
 
 
@@ -102,7 +143,7 @@ function getAllGenres(callback) {
     })
 }
 
-function getAllSeries() {
+function getAllSeries(callback) {
     console.log("getting all series");
     $.get("/series", function (data) {
         console.log("Back from the server with series: ");
@@ -116,11 +157,12 @@ function getAllSeries() {
         results += " <option value='new'> Add New Series </option>";
         document.getElementById("newItemSeriesFilter").innerHTML = results;
         // document.getElementById("editItemSeriesFilter").innerHTML = results;
+        callback(null);
     })
 
 }
 
-function getAllAuthors() {
+function getAllAuthors(callback) {
     console.log("getting all authors");
     $.get("/authors", function (data) {
         console.log("Back from the server with authors: ");
@@ -130,10 +172,11 @@ function getAllAuthors() {
             var authors = data.authors[i];
             results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
         }
+        results += " <option value='new'> Add New Series </option>";
         document.getElementById("newItemAuthorFilter").innerHTML = results;
         //document.getElementById("editItemAuthorFilter").innerHTML = results;
+        callback(null);
     })
-
 }
 
 
@@ -334,6 +377,9 @@ function newAuthor() {
 
 function viewAll() {
     console.log("viewing All...");
+    document.getElementById("hiddenEdit").style.display = "none";
+    document.getElementById("ulModify").style.display = "block";
+
 
     var to_view = $("#viewAllSelect").val();
     //console.log(genre_id);
@@ -341,7 +387,7 @@ function viewAll() {
     switch (to_view) {
         case "books":
             $.get("/viewAllBooks", function (data) {
-                var bookList = "";
+                var bookList = "<h2>Books</h2>";
                 type = 1;
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
@@ -350,7 +396,7 @@ function viewAll() {
                     if (book.series_id != 21) {
                         bookList += "Series: " + book.series_name;
                     }
-                    bookList += "<button onclick='modify(" + book.book_id + "," + type +")'>Edit</button></li>"
+                    bookList += "<button onclick='modify(" + book.book_id + "," + type + ")'>Edit</button></li>"
                 }
                 document.getElementById("ulModify").innerHTML = bookList;
 
@@ -358,43 +404,56 @@ function viewAll() {
             break;
         case "movies":
             $.get("/viewAllMovies", function (data) {
-                var movieList = "";
-                type = 2;
+                var movieList = "<h2>Movies</h2>";
                 for (var i = 0; i < data.movies.length; i++) {
                     var movie = data.movies[i];
-
                     movieList += "<li> Name: " + movie.movie_name;
                     if (movie.series_id != 21) {
                         movieList += " Series: " + movie.series_name;
                     }
-                    movieList += "<button onclick='modify(" + movie.movie_id + "," + type + ")'>Modify</button> <button onclick='del(" + movie.movie_id + "," + type + ")'>Delete</button></li>"
+                    movieList += "<button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + "'" + movie.series_name + "'" + "," + movie.genre_id + "," + "'" + movie.genre_name + "'" + ")\">Modify</button></li>"
                 }
+
                 document.getElementById("ulModify").innerHTML = movieList;
+
+            });
+            break;
+        case "genres":
+            $.get("/genres", function (data) {
+                var genreList = "<h2>Genres</h2>";
+                type = 3;
+                for (var i = 0; i < data.genres.length; i++) {
+                    var genre = data.genres[i];
+
+                    genreList += "<li>" + genre.genre_name + "<button onclick=\"modify(" + genre.genre_id + "," + type + "," + "'" + genre.genre_name + "'" + ")\">Modify</button></li>";
+                }
+
+                document.getElementById("ulModify").innerHTML = genreList;
 
             });
             break;
         case "series":
             $.get("/series", function (data) {
-                var seriesList = "";
-                var type = 3;
+                var seriesList = "<h2>Series</h2>";
+                var type = 4;
                 for (var i = 0; i < data.series.length; i++) {
                     var series = data.series[i];
 
-                    seriesList += "<li> Series: " + series.series_name + "<button onclick='modify(" + series.series_id + "," + type + ")'>Modify</button> <button onclick='del(" + series.series_id + "," + type + ")'>Delete</button> </li>";
+                    seriesList += "<li>" + series.series_name + "<button onclick=\"modify(" + series.series_id + "," + type + "," + "'" + series.series_name + "'" + ")\">Modify</button></li>";
                 }
-             
+
                 document.getElementById("ulModify").innerHTML = seriesList;
 
             });
             break;
         case "authors":
             $.get("/authors", function (data) {
-                var authorsList = "";
-                var type = 4;
+                var authorsList = "<h2>Authors</h2>";
+                var type = 5;
                 for (var i = 0; i < data.authors.length; i++) {
                     var authors = data.authors[i];
-                    
-                    authorsList += "<li> Author: " + authors.author_name + "<button onclick='modify(" + authors.author_id +","+ type +")'>Modify</button> <button onclick='del(" + authors.author_id +","+ type +")'>Delete</button> </li>";
+
+                    authorsList += "<li>" + authors.author_name + "<button onclick=\"modify(" + authors.author_id + "," + type + "," + "'" + authors.author_name + "'" + ")\">Modify</button></li>";
                 }
                 document.getElementById("ulModify").innerHTML = authorsList;
 
@@ -405,20 +464,224 @@ function viewAll() {
 
 }
 
-function modify(id, type){
+function modifyMovie(movie_id, movie_name, series_id, series_name, genre_id, genre_name) {
+    // types 1 = book, 2 = movie,
+    document.getElementById("hiddenEdit").style.display = "block";
+    var genre_id = genre_id;
+    var series_id = series_id;
 
-    //types 1 = book, 2 = movie, 3 = series, 4 = author
-    var id = id;
-    var type = type;
+    var mods = "Modify " + movie_name + "<br>";
+    mods += "<input value= '" + movie_name + "' id='movieNameUpdate'><br>"
+    mods += "<select id='modGenre'></select><br>";
+    mods += "<select id='modSeries'></select><br>";
+    modifyMovieDropDowns(genre_id, series_id, function () {
+        mods += "<button onclick=\"updateMovie(" + movie_id + ")\">Update</button><button onclick=\"delMovie(" + movie_id + ")\">Delete</button>"
+        document.getElementById("edit-form").innerHTML = mods;
+    })
 
-    console.log(" this is the mod type: " + type + " this is the id" + id);
+
+
 }
 
-function del(id, type){
+function modify(id, type, name) {
+    //types 1 = book, 2 = movie, 3 = genre, 4 = series, 5 = author
 
-    //types 1 = book, 2 = movie, 3 = series, 4 = author
+    document.getElementById("hiddenEdit").style.display = "block";
+    var id = id;
+    var type = type;
+    var mods = "";
+    var name = name;
+    console.log(name);
+
+    switch (type) {
+        case 3:
+            mods += "Modify " + name + " Genre: <br> <input value= '" + name + "' id='genreUpdate'><br>";
+            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            document.getElementById("edit-form").innerHTML = mods;
+
+            break;
+        case 4:
+            mods += "Modify Series: <br> <input value= '" + name + "' id='seriesUpdate'><br>";
+            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            document.getElementById("edit-form").innerHTML = mods;
+            break;
+        case 5:
+            mods += "Modify Author: <br> <input value= '" + name + "' id='authorUpdate'><br>";
+            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            document.getElementById("edit-form").innerHTML = mods;
+            break;
+    }
+    //console.log(" this is the mod type: " + type + " this is the id" + id);
+}
+
+function updateMovie(movie_id) {
+
+    var movie_id = movie_id
+    var movie_name = $("#movieNameUpdate").val();
+    var genre_id = $("#modGenre").val();
+    var series_id = $("#modSeries").val();
+
+    var movieUpdate = {
+        movie_id: movie_id,
+        movie_name: movie_name,
+        genre_id: genre_id,
+        series_id: series_id
+    }
+
+    $.post("/updateMovie", {
+        movieUpdate: movieUpdate
+    }, function (data) {
+        document.getElementById("errorMessage").innerHTML = data.message;
+        document.getElementById("hiddenEdit").style.display = "none";
+        document.getElementById("ulModify").innerHTML = "";
+        document.getElementById("ulModify").style.display = "none";
+
+
+    })
+
+}
+
+function update(id, type) {
+    //types 1 = book, 2 = movie, 3 = genre, 4 = series, 5 = author
     var id = id;
     var type = type;
 
-    console.log(" this is the del type: " + type + " this is the id" + id);
+
+    switch (type) {
+        case 3:
+            var genre_name = $("#genreUpdate").val();
+            var newGenre = {
+                genre_name: genre_name,
+                genre_id: id
+            }
+            $.post("/updateGenre", {
+                newGenre: newGenre
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllGenres(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+                })
+
+            })
+            break;
+        case 4:
+            var series_name = $("#seriesUpdate").val();
+            var newSeries = {
+                series_name: series_name,
+                series_id: id
+            }
+            $.post("/updateSeries", {
+                newSeries: newSeries
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllSeries(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+                })
+
+            })
+            break;
+        case 5:
+            var author_name = $("#authorUpdate").val();
+            var newAuthor = {
+                author_name: author_name,
+                author_id: id
+            }
+            $.post("/updateAuthor", {
+                newAuthor: newAuthor
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllAuthors(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+                })
+
+            })
+            break;
+    }
+}
+
+function delMovie(movie_id) {
+    var movie_id = movie_id;
+
+    $.post("/deleteMovie", {
+        movie_id: movie_id
+    }, function (data) {
+        document.getElementById("errorMessage").innerHTML = data.message;
+        document.getElementById("hiddenEdit").style.display = "none";
+        document.getElementById("ulModify").innerHTML = "";
+        document.getElementById("ulModify").style.display = "none";
+})
+}
+
+
+function del(id, type) {
+
+    //types 1 = book, 2 = movie, 3 = genre, 4 = series, 5 = author
+    console.log("deleting: " + id + " " + type);
+
+    switch (type) {
+        case 3:
+            var genre_name = $("#genreUpdate").val();
+            var deleteGenre = {
+                genre_name: genre_name,
+                genre_id: id
+            }
+            $.post("/deleteGenre", {
+                deleteGenre: deleteGenre
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllGenres(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+
+
+                })
+
+            })
+            break;
+        case 4:
+            var series_name = $("#seriesUpdate").val();
+            var deleteSeries = {
+                series_name: series_name,
+                series_id: id
+            }
+            $.post("/deleteSeries", {
+                deleteSeries: deleteSeries
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllSeries(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+
+
+                })
+
+            })
+            break;
+        case 5:
+            var author_name = $("#authorUpdate").val();
+            var deleteAuthor = {
+                author_name: author_name,
+                author_id: id
+            }
+            $.post("/deleteAuthor", {
+                deleteAuthor: deleteAuthor
+            }, function (data) {
+                document.getElementById("errorMessage").innerHTML = data.message;
+                getAllAuthors(function () {
+                    document.getElementById("hiddenEdit").style.display = "none";
+                    document.getElementById("ulModify").innerHTML = "";
+                    document.getElementById("ulModify").style.display = "none";
+                })
+
+            })
+            break;
+    }
 }

@@ -42,7 +42,7 @@ button{
 }
 
 
-#hiddenGenre, #hiddenSeries, #hiddenNewAuthor{
+#hiddenGenre, #hiddenSeries, #hiddenNewAuthor, #hiddenEdit, #ulModify{
     display: none;
 }
 .layout {

@@ -159,7 +159,7 @@ function viewBooks(callback){
 function viewMovies(callback){
     console.log("building movie lists");
 
-    var sql = "SELECT movie_id, movie_name, series.series_id, series_name FROM movie JOIN series on movie.series_id = series.series_id ORDER BY movie_name ASC ";
+    var sql = "SELECT movie_id, movie_name, series.series_id, series_name, genre.genre_id, genre_name FROM movie JOIN series on movie.series_id = series.series_id JOIN genre ON movie.genre_id = genre.genre_id ORDER BY movie_name ASC ";
 
     pool.query(sql, function (err, result) {
         if (err) {

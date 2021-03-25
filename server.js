@@ -19,23 +19,32 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.sendFile(path.join(__dirname+ '/public/bibliotek.html')));
 
-app.get("/genres", searchController.getGenreList)
-app.get("/series", searchController.getSeriesList)
-app.get("/authors", searchController.getAuthorList)
-app.get("/filterBooks", filterController.filterBooks)
-app.get("/searchBook", searchController.searchBook)
-app.get("/searchMovie", searchController.searchMovie)
-app.get("/filterMovies", filterController.filterMovies)
-app.get("/allBooks", searchController.getAllBooks)
-app.get("/viewAllBooks", searchController.viewAllBooks)
-app.get("/viewAllMovies", searchController.viewAllMovies)
+app.get("/genres", searchController.getGenreList);
+app.get("/series", searchController.getSeriesList);
+app.get("/authors", searchController.getAuthorList);
+app.get("/filterBooks", filterController.filterBooks);
+app.get("/searchBook", searchController.searchBook);
+app.get("/searchMovie", searchController.searchMovie);
+app.get("/filterMovies", filterController.filterMovies);
+app.get("/allBooks", searchController.getAllBooks);
+app.get("/viewAllBooks", searchController.viewAllBooks);
+app.get("/viewAllMovies", searchController.viewAllMovies);
 
 //POST
 app.post("/addBook", modifyController.addNewBook);
 app.post("/addMovie", modifyController.addNewMovie);
 app.post("/addGenre", modifyController.addNewGenre);
-app.post("/addSeries", modifyController.addNewSeries)
-app.post("/addAuthor", modifyController.addNewAuthor)
+app.post("/addSeries", modifyController.addNewSeries);
+app.post("/addAuthor", modifyController.addNewAuthor);
+app.post("/updateGenre", modifyController.updateGenre);
+app.post("/updateSeries", modifyController.updateSeries);
+app.post("/updateAuthor", modifyController.updateAuthor);
+app.post("/updateMovie", modifyController.updateMovie);
+
+app.post("/deleteGenre", modifyController.deleteGenre);
+app.post("/deleteSeries", modifyController.deleteSeries);
+app.post("/deleteAuthor", modifyController.deleteAuthor);
+app.post("/deleteMovie", modifyController.deleteMovie);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 
