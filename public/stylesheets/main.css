@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Henny+Penny&family=Signika:wght@300;500;700&display=swap');
 html {
     box-sizing: border-box;
     position: relative;
-   
+    font-family: 'Signika', sans-serif;
+    ;
 }
 
 *, *:before, *:after {
@@ -9,16 +11,44 @@ html {
 }
 
 body {
-    border: 4px solid black;
+    border: 10px solid #403333;
     width: 100%;
     margin: 0;
     min-width: 360px;
     min-height: 100vh;
     padding-bottom: 50px;
+    background-color: #D9D7D7;
+    color: #403333;
 }
 
-h1, h2, h3{
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: -10px;
+}
+
+h1 {
+    font-family: 'Henny Penny', cursive;
+    font-size: 3.5rem;
+    color: #736463;
+    margin-bottom: 0;
+    margin-top: 1rem;
+}
+
+h2 {
+    margin-top: 0;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+h1, h2, h3 {
     text-align: center;
+}
+
+label {
+    color: #403333;
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 input, select {
@@ -27,43 +57,57 @@ input, select {
     width: 75%;
 }
 
-button{
-    margin-left: 10px;
+
+.newAdds {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-#modifyDiv{
+.addNewBtn {
+    background-color: #403333;
+    color: #D9D7D7;
+    outline: none;
+    border: none;
+    padding: 5px 7px;
+    box-shadow: 2px 2px #999;
+}
+
+.addNewBtn:hover {
+    background-color: #8C7D7B;
+}
+
+.addNewBtn:active {
+    background-color: #8C7D7B;
+    box-shadow: 0 3px #666;
+    transform: translateY(4px);
+}
+
+#searchDiv, #results, #modifyDiv, #viewAll {
+    border-bottom: 3px solid #403333;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+#modifyDiv {
     width: 95%;
     margin-left: 15px;
 }
 
-#errorAdd, #errorMod{
+#errorAdd, #errorMod {
     color: red;
     text-align: center;
 }
 
-
-#hiddenGenre, #hiddenSeries, #hiddenNewAuthor, #hiddenEdit, #ulModify{
+#hiddenGenre, #hiddenSeries, #hiddenNewAuthor, #hiddenEdit, #ulModify {
     display: none;
 }
-.layout {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+
+#hiddenGenre, #hiddenSeries, #hiddenNewAuthor {
+    border: 1px solid #403333;
+    padding: 10px
 }
 
-#booksDiv{
-    grid-row-start: 1;
-    grid-row-end: 2;
-    text-align: center;
-}
-
-#moviesDiv {
-    grid-row-start: 2;
-    grid-row-end: 3;
-    text-align: center;
-}
-
-#booksDiv, #moviesDiv, #results {
-    border-bottom: 3px solid black;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
+#test {
+    align-items: right;
 }

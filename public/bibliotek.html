@@ -2,16 +2,11 @@
 <html>
 
 <head>
-  <script src="bibliotek-clientside.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="bibliotek-clientside.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="stylesheets/main.css">
-
-
-
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
 </head>
 
 <body>
@@ -20,7 +15,7 @@
   <div class="container">
 
 
-    <div id="booksDiv">
+    <div id="searchDiv">
       <h2>Book & Movie Library</h2>
       <label>Filter</label>
       <select id="genreFilter">
@@ -55,14 +50,14 @@
       <label>Genre</label>
       <select id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
       <div id="hiddenGenre">
-        <label>New Genre</label>
+        <p class="newAdds">New Genre</p>
         <input type="text" id="addNewGenre" placeholder="New Genre">
         <button onclick="newGenre()">Add</button>
       </div><br>
       <label>Series</label>
       <select id="newItemSeriesFilter" onchange="showNewSeries('hiddenSeries', this)"></select><br>
       <div id="hiddenSeries">
-        <label>New Series</label>
+        <p class="newAdds">New Series</p>
         <input type="text" id="addNewSeries" placeholder="Series Name">
         <button onclick="newSeries()">Add</button>
       </div>
@@ -73,16 +68,22 @@
         <label>Author</label>
         <select id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)"></select>
         <div id="hiddenNewAuthor">
-          <label>New Author</label>
+          <p class="newAdds">New Author</p>
           <input type="text" id="addNewAuthor" placeholder="Author Name">
-          <button onclick="newAuthor()">Add</button>
+          <button  onclick="newAuthor()">Add</button>
         </div>
 
       </div>
-      <button onclick="addNewItem()">Add Item</button>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="button">Button</button>
+        <button class="btn btn-primary" type="button">Button</button>
+      </div>
+      <div class="mx-auto">
+      <button class="addNewBtn mx-auto" type="button" onclick="addNewItem()">Add Item</button>
+    </div>
 
     </div>
-    <hr>
+
     <div id="viewAll">
       <h2>View all to Edit/Delete</h2>
       <div id="errorMod"></div>
@@ -97,7 +98,7 @@
       <button onclick="viewAll()">View All</button>
 
     </div>
-    <div id="results">
+    <div id="viewResults">
       
       <ul id="ulModify">
       </ul>
