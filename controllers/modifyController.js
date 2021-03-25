@@ -203,6 +203,46 @@ function updateMovie(req, res){
 
 }
 
+function updateBook(req, res){
+    console.log("updating movie")
+
+    var bookUpdate = req.body.bookUpdate;
+ 
+    modifyModel.updatingBook(bookUpdate, function (error, results) {
+        if (results == 0) {
+            var message = {
+                message: "Error with Database, Book not updated"
+            };
+        } else {
+            var message = {
+                message: "Book Updated!"
+            };
+        }
+        res.json(message);
+    })
+
+}
+
+function deleteBook(req, res){
+
+    var book_id = req.body.book_id;
+    modifyModel.deletingBook(book_id, function (error, results){
+        if (results == 0) {
+            var message = {
+                message: "Error with Database, Book not deleted"
+            };
+            res.json(message);
+        } else {
+            var message = {
+                message: "Book was successfully deleted"
+            }
+            res.json(message);
+        }
+
+    })
+
+}
+
 function deleteMovie(req, res){
     var movie_id = req.body.movie_id;
     modifyModel.deletingMovie(movie_id, function (error, results){
@@ -335,6 +375,8 @@ module.exports = {
     updateAuthor:updateAuthor,
     deleteAuthor:deleteAuthor,
     updateMovie:updateMovie,
-    deleteMovie:deleteMovie
+    deleteMovie:deleteMovie,
+    updateBook:updateBook,
+    deleteBook:deleteBook
 
 }

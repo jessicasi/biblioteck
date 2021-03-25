@@ -86,6 +86,65 @@ function modifyMovieDropDowns(genre_id, series_id, callback) {
 
 }
 
+function modifyBookDropDowns(genre_id, series_id, author_id, callback){
+    console.log("modify drop downs genre id : " + genre_id + "and series_id:  " + series_id);
+    //Genre drop downs
+    $.get("/genres", function (data) {
+        var results = "";
+        for (var i = 0; i < data.genres.length; i++) {
+            var genre = data.genres[i];
+            //console.log("cycle through genre.genre_id: " + genre.genre_id + " genre name: " + genre.genre_name);
+
+            if (genre.genre_id == genre_id) {
+                // console.log("this one matches");
+                results += " <option value='" + genre.genre_id + "' selected>" + genre.genre_name + "</option>";
+            } else {
+                results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
+            }
+        }
+        document.getElementById("modBookGenre").innerHTML = results;
+    })
+
+    //series drop downs
+    $.get("/series", function (data) {
+        var results = "";
+        for (var i = 0; i < data.series.length; i++) {
+            var series = data.series[i];
+            // console.log("cycle though series.series_id " + series.series_id + "series name " + series.series_name);
+            if (series.series_id == series_id) {
+                //console.log("this one matches");
+                results += " <option value='" + series.series_id + "' selected>" + series.series_name + "</option>";
+
+            } else {
+
+                results += " <option value='" + series.series_id + "'>" + series.series_name + "</option>";
+            }
+        }
+        document.getElementById("modBookSeries").innerHTML = results;
+
+    })
+
+    //author drop downs
+    $.get("/authors", function (data) {
+        var results = "";
+        for (var i = 0; i < data.authors.length; i++) {
+            var authors = data.authors[i];
+
+            if(authors.author_id == author_id){
+                results += " <option value='" + authors.author_id + "' selected>" + authors.author_name + "</option>";
+            }else {
+            results += " <option value='" + authors.author_id + "'>" + authors.author_name + "</option>";
+        }
+    }
+
+        document.getElementById("modBookAuthor").innerHTML = results;
+
+    })
+
+    callback(null);
+
+}
+
 
 function searchByBook() {
     var book = $("#searchItem").val();
@@ -396,7 +455,7 @@ function viewAll() {
                     if (book.series_id != 21) {
                         bookList += "Series: " + book.series_name;
                     }
-                    bookList += "<button onclick='modify(" + book.book_id + "," + type + ")'>Edit</button></li>"
+                    bookList += "<button onclick=\"modifyBook(" + book.book_id + "," + "'" + book.book_name + "'" + "," + book.series_id + "," + book.genre_id + "," + book.author_id + ")\">Modify</button></li>"
                 }
                 document.getElementById("ulModify").innerHTML = bookList;
 
@@ -411,7 +470,7 @@ function viewAll() {
                     if (movie.series_id != 21) {
                         movieList += " Series: " + movie.series_name;
                     }
-                    movieList += "<button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + "'" + movie.series_name + "'" + "," + movie.genre_id + "," + "'" + movie.genre_name + "'" + ")\">Modify</button></li>"
+                    movieList += "<button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + movie.genre_id + ")\">Modify</button></li>"
                 }
 
                 document.getElementById("ulModify").innerHTML = movieList;
@@ -463,9 +522,26 @@ function viewAll() {
     }
 
 }
+function modifyBook(book_id, book_name, series_id, genre_id, author_id){
 
-function modifyMovie(movie_id, movie_name, series_id, series_name, genre_id, genre_name) {
-    // types 1 = book, 2 = movie,
+    document.getElementById("hiddenEdit").style.display = "block";
+    var genre_id = genre_id;
+    var series_id = series_id;
+    var author_id = author_id;
+
+    var mods = "Modify " + book_name + "<br>";
+    mods += "<input value= '" + book_name + "' id='bookNameUpdate'><br>"
+    mods += "<select id='modBookGenre'></select><br>";
+    mods += "<select id='modBookSeries'></select><br>";
+    mods += "<select id='modBookAuthor'></select><br>";
+    modifyBookDropDowns(genre_id, series_id, author_id, function () {
+        mods += "<button onclick=\"updateBook(" + book_id + ")\">Update</button><button onclick=\"delBook(" + book_id + ")\">Delete</button>"
+        document.getElementById("edit-form").innerHTML = mods;
+    })
+}
+
+function modifyMovie(movie_id, movie_name, series_id, genre_id) {
+    
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
     var series_id = series_id;
@@ -538,6 +614,35 @@ function updateMovie(movie_id) {
 
 
     })
+
+}
+
+function updateBook(book_id){
+    var book_id = book_id
+    var book_name = $("#bookNameUpdate").val();
+    var genre_id = $("#modBookGenre").val();
+    var series_id = $("#modBookSeries").val();
+    var author_id = $("#modBookAuthor").val();
+
+    var bookUpdate = {
+        book_id: book_id,
+        book_name: book_name,
+        genre_id: genre_id,
+        series_id: series_id,
+        author_id:author_id
+    }
+
+    $.post("/updateBook", {
+        bookUpdate: bookUpdate
+    }, function (data) {
+        document.getElementById("errorMessage").innerHTML = data.message;
+        document.getElementById("hiddenEdit").style.display = "none";
+        document.getElementById("ulModify").innerHTML = "";
+        document.getElementById("ulModify").style.display = "none";
+
+
+    })
+
 
 }
 
@@ -616,6 +721,20 @@ function delMovie(movie_id) {
         document.getElementById("ulModify").innerHTML = "";
         document.getElementById("ulModify").style.display = "none";
 })
+}
+
+function delBook(book_id){
+    var book_id = book_id;
+
+    $.post("/deleteBook", {
+        book_id: book_id
+    }, function (data) {
+        document.getElementById("errorMessage").innerHTML = data.message;
+        document.getElementById("hiddenEdit").style.display = "none";
+        document.getElementById("ulModify").innerHTML = "";
+        document.getElementById("ulModify").style.display = "none";
+})
+
 }
 
 

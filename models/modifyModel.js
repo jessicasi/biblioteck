@@ -172,6 +172,24 @@ function addNewAuthor(author, callback) {
 
 }
 
+function updatingBook(bookUpdate, callback){
+
+    console.log("updating the book with " + bookUpdate.book_name + "and " + bookUpdate.book_id)
+    var sql = "UPDATE book SET book_name = $1::text, genre_id = $2::int, series_id = $3::int, author_id = $4::int WHERE book_id = $5::int";
+    var params = [bookUpdate.book_name, bookUpdate.genre_id, bookUpdate.series_id, bookUpdate.author_id, bookUpdate.book_id]
+
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            callback(null, db_results.rowCount);
+        }
+    })
+
+}
+
 function updatingGenre(newGenre, callback){
     console.log("updating the genre with " + newGenre.genre_name + "add " + newGenre.genre_id)
     var sql = "UPDATE genre SET genre_name = $1::text WHERE genre_id = $2::int";
@@ -243,6 +261,22 @@ function deletingMovie(movie_id, callback){
 
     var sql = "DELETE FROM movie WHERE movie_id = $1::int";
     var params = [movie_id];
+    pool.query(sql, params, function (err, db_results) {
+        if (err) {
+            console.log("An error with the database occurred");
+            console.log(err);
+            callback(err, null);
+        } else {
+            callback(null, db_results.rowCount);
+        }
+    })
+
+
+}
+function deletingBook(book_id, callback){
+
+    var sql = "DELETE FROM book WHERE book_id = $1::int";
+    var params = [book_id];
     pool.query(sql, params, function (err, db_results) {
         if (err) {
             console.log("An error with the database occurred");
@@ -385,5 +419,7 @@ module.exports = {
     authorInUse:authorInUse,
     deletingAuthor:deletingAuthor,
     updatingMovie:updatingMovie,
-    deletingMovie:deletingMovie
+    deletingMovie:deletingMovie,
+    updatingBook:updatingBook,
+    deletingBook:deletingBook
 }

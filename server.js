@@ -40,11 +40,13 @@ app.post("/updateGenre", modifyController.updateGenre);
 app.post("/updateSeries", modifyController.updateSeries);
 app.post("/updateAuthor", modifyController.updateAuthor);
 app.post("/updateMovie", modifyController.updateMovie);
+app.post("/updateBook", modifyController.updateBook);
 
 app.post("/deleteGenre", modifyController.deleteGenre);
 app.post("/deleteSeries", modifyController.deleteSeries);
 app.post("/deleteAuthor", modifyController.deleteAuthor);
 app.post("/deleteMovie", modifyController.deleteMovie);
+app.post("/deleteBook", modifyController.deleteBook);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
 

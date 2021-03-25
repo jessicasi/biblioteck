@@ -122,7 +122,7 @@ function getAllAuthors(callback){
 function viewBooks(callback){
     console.log("building book lists");
 
-    var sql = "SELECT book_id, book_name, author_name, series.series_id, series_name FROM book JOIN author on book.author_id = author.author_id JOIN series on book.series_id = series.series_id ORDER BY book_name ASC ";
+    var sql = "SELECT book_id, book_name, author_name, author.author_id,series.series_id, series_name, genre.genre_id FROM book JOIN author ON book.author_id = author.author_id JOIN series on book.series_id = series.series_id JOIN genre ON book.genre_id = genre.genre_id ORDER BY book_name ASC ";
 
     pool.query(sql, function (err, result) {
         if (err) {
