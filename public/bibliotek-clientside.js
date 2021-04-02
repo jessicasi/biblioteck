@@ -10,10 +10,10 @@ function setUpDropDowns() {
             // console.log(genre);
             results += " <option value='" + genre.genre_id + "'>" + genre.genre_name + "</option>";
         }
+
+        document.getElementById("genreFilter").innerHTML = results;
         results += " <option value='new'> Add New Genre </option>";
 
-        //console.log(results);
-        document.getElementById("genreFilter").innerHTML = results;
         document.getElementById("newItemGenreFilter").innerHTML = results;
     })
 
@@ -273,7 +273,7 @@ function filterByBook() {
                 var bookList = "";
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
-                    bookList += "<li>" + book.book_name + " " + book.author_name + "</li>";
+                    bookList += "<li><span class='bookName'>" + book.book_name + " </span> by: " + book.author_name + "</li>";
                 }
                 document.getElementById("ulBibliotek").innerHTML = bookList;
             }
@@ -299,7 +299,7 @@ function filterByMovie() {
                 var movieList = "";
                 for (var i = 0; i < data.movies.length; i++) {
                     var movie = data.movies[i];
-                    movieList += "<li>" + movie.movie_name + "</li>";
+                    movieList += "<li class='movieName'>" + movie.movie_name + "</li>";
                 }
                 document.getElementById("ulBibliotek").innerHTML = movieList;
             }
@@ -492,7 +492,7 @@ function newAuthor() {
 function viewAll() {
     console.log("viewing All...");
     document.getElementById("hiddenEdit").style.display = "none";
-    document.getElementById("ulModify").style.display = "block";
+    document.getElementById("viewResults").style.display = "block";
 
 
     var to_view = $("#viewAllSelect").val();
@@ -506,13 +506,13 @@ function viewAll() {
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
 
-                    bookList += "<li> Name: " + book.book_name + " By: " + book.author_name;
+                    bookList += "<p><span class='viewAllLabel'> Name:</span> " + book.book_name + "</p><p><span class='viewAllLabel'> By: </span>" + book.author_name + "</p>";
                     if (book.series_id != 21) {
-                        bookList += "Series: " + book.series_name;
+                        bookList += "<p><span class='viewAllLabel'> Series: </span>" + book.series_name + "</p>";
                     }
-                    bookList += "<button onclick=\"modifyBook(" + book.book_id + "," + "'" + book.book_name + "'" + "," + book.series_id + "," + book.genre_id + "," + book.author_id + ")\">Modify</button></li>"
+                    bookList += "<p><a href='#hiddenEdit'><button onclick=\"modifyBook(" + book.book_id + "," + "'" + book.book_name + "'" + "," + book.series_id + "," + book.genre_id + "," + book.author_id + ")\">Modify</button></a></p><hr>"
                 }
-                document.getElementById("ulModify").innerHTML = bookList;
+                document.getElementById("viewResults").innerHTML = bookList;
 
             });
             break;
@@ -521,14 +521,14 @@ function viewAll() {
                 var movieList = "<h2>Movies</h2>";
                 for (var i = 0; i < data.movies.length; i++) {
                     var movie = data.movies[i];
-                    movieList += "<li> Name: " + movie.movie_name;
+                    movieList += "<p><span class='viewAllLabel'> Name: </span>" + movie.movie_name + "</p>";
                     if (movie.series_id != 21) {
-                        movieList += " Series: " + movie.series_name;
+                        movieList += " <p><span class='viewAllLabel'>Series: </span>" + movie.series_name + "</p>";
                     }
-                    movieList += "<button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + movie.genre_id + ")\">Modify</button></li>"
+                    movieList += "<p><a href='#hiddenEdit'><button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + movie.genre_id + ")\">Modify</button></a></p><hr>"
                 }
 
-                document.getElementById("ulModify").innerHTML = movieList;
+                document.getElementById("viewResults").innerHTML = movieList;
 
             });
             break;
@@ -539,10 +539,10 @@ function viewAll() {
                 for (var i = 0; i < data.genres.length; i++) {
                     var genre = data.genres[i];
 
-                    genreList += "<li>" + genre.genre_name + "<button onclick=\"modify(" + genre.genre_id + "," + type + "," + "'" + genre.genre_name + "'" + ")\">Modify</button></li>";
+                    genreList += "<p>" + genre.genre_name + "</p><p><a href='#hiddenEdit'><button onclick=\"modify(" + genre.genre_id + "," + type + "," + "'" + genre.genre_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
 
-                document.getElementById("ulModify").innerHTML = genreList;
+                document.getElementById("viewResults").innerHTML = genreList;
 
             });
             break;
@@ -553,10 +553,10 @@ function viewAll() {
                 for (var i = 0; i < data.series.length; i++) {
                     var series = data.series[i];
 
-                    seriesList += "<li>" + series.series_name + "<button onclick=\"modify(" + series.series_id + "," + type + "," + "'" + series.series_name + "'" + ")\">Modify</button></li>";
+                    seriesList += "<p>" + series.series_name + "</p> <p> <a href='#hiddenEdit'><button onclick=\"modify(" + series.series_id + "," + type + "," + "'" + series.series_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
 
-                document.getElementById("ulModify").innerHTML = seriesList;
+                document.getElementById("viewResults").innerHTML = seriesList;
 
             });
             break;
@@ -567,9 +567,9 @@ function viewAll() {
                 for (var i = 0; i < data.authors.length; i++) {
                     var authors = data.authors[i];
 
-                    authorsList += "<li>" + authors.author_name + "<button onclick=\"modify(" + authors.author_id + "," + type + "," + "'" + authors.author_name + "'" + ")\">Modify</button></li>";
+                    authorsList += "<p>" + authors.author_name + "</p><p><a href='#hiddenEdit'><button onclick=\"modify(" + authors.author_id + "," + type + "," + "'" + authors.author_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
-                document.getElementById("ulModify").innerHTML = authorsList;
+                document.getElementById("viewResults").innerHTML = authorsList;
 
             });
             break;
@@ -579,35 +579,35 @@ function viewAll() {
 }
 
 function modifyBook(book_id, book_name, series_id, genre_id, author_id) {
-
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
     var series_id = series_id;
     var author_id = author_id;
-
-    var mods = "Modify " + book_name + "<br>";
-    mods += "<input value= '" + book_name + "' id='bookNameUpdate'><br>"
-    mods += "<select id='modBookGenre'></select><br>";
-    mods += "<select id='modBookSeries'></select><br>";
-    mods += "<select id='modBookAuthor'></select><br>";
+    
+    var mods = "<p class='text-center'>" + book_name + "<p>";
+    mods += "<label class='col1'>Name</label><textarea rows='1' value= ' id='bookNameUpdate' class='col2'>" + book_name + "</textarea><br>"
+    mods += "<label class='col1'>Genre</label> <select id='modBookGenre' class='col2'></select><br>";
+    mods += "<label class='col1'>Series</label><select id='modBookSeries' class='col2'></select><br>";
+    mods += "<label class='col1'>Author</label><select id='modBookAuthor' class='col2'></select><br>";
     modifyBookDropDowns(genre_id, series_id, author_id, function () {
-        mods += "<button onclick=\"updateBook(" + book_id + ")\">Update</button><button onclick=\"delBook(" + book_id + ")\">Delete</button>"
+        mods += "<div class='d-flex justify-content-center'><button class='button-right' onclick=\"updateBook(" + book_id + ")\">Update</button><button class='button-right' onclick=\"delBook(" + book_id + ")\">Delete</button></div>"
         document.getElementById("edit-form").innerHTML = mods;
     })
 }
 
 function modifyMovie(movie_id, movie_name, series_id, genre_id) {
 
+     
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
     var series_id = series_id;
-
-    var mods = "Modify " + movie_name + "<br>";
-    mods += "<input value= '" + movie_name + "' id='movieNameUpdate'><br>"
-    mods += "<select id='modGenre'></select><br>";
-    mods += "<select id='modSeries'></select><br>";
+   
+    var mods = "<p class='text-center'> " + movie_name + "<p>";
+    mods += "<label class='col1'>Name</label><input value= '" + movie_name + "' id='movieNameUpdate' class='col2'><br>"
+    mods += "<label class='col1'>Genre</label><select id='modGenre' class='col2'></select><br>";
+    mods += "<label class='col1'>Series</label><select id='modSeries' class='col2'></select><br>";
     modifyMovieDropDowns(genre_id, series_id, function () {
-        mods += "<button onclick=\"updateMovie(" + movie_id + ")\">Update</button><button onclick=\"delMovie(" + movie_id + ")\">Delete</button>"
+        mods += "<div class='d-flex justify-content-center'><button class='button-right'<button class='button-right' onclick=\"updateMovie(" + movie_id + ")\">Update</button><button class='button-right' onclick=\"delMovie(" + movie_id + ")\">Delete</button></div>"
         document.getElementById("edit-form").innerHTML = mods;
     })
 
@@ -627,19 +627,19 @@ function modify(id, type, name) {
 
     switch (type) {
         case 3:
-            mods += "Modify " + name + " Genre: <br> <input value= '" + name + "' id='genreUpdate'><br>";
-            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            mods += "<p class='text-center'> Genre: " + name + " </p> <p><input value= '" + name + "' id='genreUpdate'></p>";
+            mods += "<div class='d-flex justify-content-center'><button class='button-right' onclick=\"update(" + id + ',' + type + ")\">Update</button><button class='button-right' onclick=\"del(" + id + ',' + type + ")\">Delete</button></div>"
             document.getElementById("edit-form").innerHTML = mods;
 
             break;
         case 4:
-            mods += "Modify Series: <br> <input value= '" + name + "' id='seriesUpdate'><br>";
-            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            mods += "<p class='text-center'> Series: " + name + "  </p> <p><input value= '" + name + "' id='seriesUpdate'></p>";
+            mods += "<div class='d-flex justify-content-center'><button class='button-right' onclick=\"update(" + id + ',' + type + ")\">Update</button><button class='button-right' onclick=\"del(" + id + ',' + type + ")\">Delete</button></div>"
             document.getElementById("edit-form").innerHTML = mods;
             break;
         case 5:
-            mods += "Modify Author: <br> <input value= '" + name + "' id='authorUpdate'><br>";
-            mods += "<button onclick=\"update(" + id + ',' + type + ")\">Update</button><button onclick=\"del(" + id + ',' + type + ")\">Delete</button>"
+            mods += "<p class='text-center'>  Author: " + name + " Author: </p> <p><input value= '" + name + "' id='authorUpdate'></p>";
+            mods += "<div class='d-flex justify-content-center'><button class='button-right' onclick=\"update(" + id + ',' + type + ")\">Update</button><button class='button-right' onclick=\"del(" + id + ',' + type + ")\">Delete</button></div>"
             document.getElementById("edit-form").innerHTML = mods;
             break;
     }

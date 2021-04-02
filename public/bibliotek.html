@@ -2,8 +2,9 @@
 <html>
 
 <head>
-  
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="bibliotek-clientside.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,17 +18,24 @@
 
 
     <div id="searchDiv">
-      <h2>Book & Movie Library</h2>
-      <label>Filter</label>
+      <h2><em>Book & Movie Library</em></h2>
+
+      <div class="d-flex justify-content-center">
       <select id="genreFilter">
 
       </select>
-      <button onclick="filterByBook()">Filter Books</button>
-      <button onclick="filterByMovie()">Filter Movies</button><br>
-      <label>Search</label>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button class="button-right" onclick="filterByBook()">Filter Books</button>
+        <button class="button-right" onclick="filterByMovie()">Filter Movies</button>
+      </div>
+      <div class="d-flex justify-content-center">
       <input type="text" id="searchItem" placeholder="Search">
-      <button onclick="searchByBook()">Search Books</button>
-      <button onclick="searchByMovie()">Search Movies</button>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button class="button-right" onclick="searchByBook()">Search Books</button>
+        <button class="button-right" onclick="searchByMovie()">Search Movies</button>
+      </div>
     </div>
 
     <div id="results">
@@ -41,44 +49,41 @@
       <h2>Add Book or Movie</h2>
       <div id="errorAdd"></div>
       <div id="successAdd"></div>
-      <label>Item </label>
-      <select id="addType" onchange="showAuthor('hiddenAuthor', this)">
+      <label class="col1">Item  </label>
+      <select class="col2" id="addType" onchange="showAuthor('hiddenAuthor', this)">
         <option value="book">Book</option>
         <option value="movie">Movie</option>
       </select><br>
-      <label>Name</label>
-      <input type="text" id="newItemName" placeholder="Name"><br>
-      <label>Genre</label>
-      <select id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
+      <label class="col1">Name</label>
+      <textarea rows='1' class="col2 nameInput" type="text" id="newItemName" placeholder="Name"></textarea><br>
+      <label class="col1">Genre</label>
+      <select class="col2" id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
       <div id="hiddenGenre">
         <p class="newAdds">New Genre</p>
         <input type="text" id="addNewGenre" placeholder="New Genre">
         <button onclick="newGenre()">Add</button>
       </div><br>
-      <label>Series</label>
-      <select id="newItemSeriesFilter" onchange="showNewSeries('hiddenSeries', this)"></select><br>
+      <label class="col1">Series</label>
+      <select class="col2" id="newItemSeriesFilter" onchange="showNewSeries('hiddenSeries', this)"></select><br>
       <div id="hiddenSeries">
         <p class="newAdds">New Series</p>
         <input type="text" id="addNewSeries" placeholder="Series Name">
         <button onclick="newSeries()">Add</button>
       </div>
-      <!--       <label>Location</label>
-      <input type="text" id="newLocationName" placeholder="Series Name"><br> -->
-      <!-- Add location in here as well, and perhaps image -->
       <div id="hiddenAuthor">
-        <label>Author</label>
-        <select id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)"></select>
+        <label class="col1">Author</label>
+        <select class="col2" id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)"></select>
         <div id="hiddenNewAuthor">
           <p class="newAdds">New Author</p>
           <input type="text" id="addNewAuthor" placeholder="Author Name">
-          <button  onclick="newAuthor()">Add</button>
+          <button onclick="newAuthor()">Add</button>
         </div>
 
       </div>
-  
-      <div class="d-grid gap-2 col-6 mx-auto">
-      <button  type="button" onclick="addNewItem()">Add Item</button>
-    </div>
+
+      <div class="d-flex justify-content-center">
+        <button type="button" onclick="addNewItem()">Add Item</button>
+      </div>
 
     </div>
 
@@ -86,6 +91,7 @@
       <h2>View all to Edit/Delete</h2>
       <div id="errorMod"></div>
       <div id="successMod"></div>
+      <div class="d-flex justify-content-center">
       <select id="viewAllSelect">
         <option value="books">Books</option>
         <option value="movies">Movies</option>
@@ -93,21 +99,21 @@
         <option value="series">Series</option>
         <option value="authors">Authors</option>
       </select>
-      <button onclick="viewAll()">View</button>
+      <a href="#viewResults"><button class="button-left" onclick="viewAll()">View</button></a></div>
 
     </div>
     <div id="viewResults">
-      
+
       <ul id="ulModify">
       </ul>
     </div>
     <div id="hiddenEdit">
-      <h2>Edit</h2>
+      <h2>Modify</h2>
       <div id="edit-form">
         <p>form</p>
 
       </div>
-  
+
     </div>
 
 

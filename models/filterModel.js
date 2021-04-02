@@ -15,7 +15,7 @@ const pool = new Pool({
 function filterByBook(genre_id, callback) {
     console.log("made it to filterering book model " + genre_id);
 
-    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book.genre_id = $1::int";
+    var sql = "SELECT book_id,book_name, book.author_id, author_name FROM book JOIN author ON book.author_id = author.author_id WHERE book.genre_id = $1::int ORDER BY book_name ASC";
     //var sql = "SELECT book_id, book_name FROM book WHERE book_id = $1::int";
     var params = [genre_id];
     var string = "";
