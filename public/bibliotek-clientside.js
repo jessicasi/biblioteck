@@ -150,9 +150,11 @@ function searchByBook() {
     var book = $("#searchItem").val();
     document.getElementById("searchItem").val = "";
     document.getElementById("ulBibliotek").innerHTML = "";
-
+    document.getElementById("errorSearch").innerHTML = "";
+    document.getElementById("results").style.display = "none";
     if (!book) {
-        document.getElementById("ulBibliotek").innerHTML = "Enter a book title to search for";
+        document.getElementById("results").style.display = "block";
+        document.getElementById("errorSearch").innerHTML = "Enter a book title to search for";
     } else {
 
         $.get("/searchBook", {
@@ -162,15 +164,18 @@ function searchByBook() {
             console.log(data);
             //console.log(data.books);
             if (!data.books.length) {
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = "No books can be found";
             } else {
+                var bookList = "<h2>Book Search Results: </h2>";
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
-                    console.log(book);
-                    //$("#ulBibliotek").append("<li>" + book.book_name + " " + book.author_name + "</li>");
-                    document.getElementById("ulBibliotek").innerHTML = "<li>" + book.book_name + " " + book.author_name + "</li>";
+                    bookList += "<li><span class='bookName'>" + book.book_name + " </span> by: " + book.author_name + "</li>";
                 }
-            }
+                document.getElementById("results").style.display = "block";
+                document.getElementById("ulBibliotek").innerHTML = bookList;
+                }
+
 
         })
     }
@@ -181,21 +186,28 @@ function searchByMovie() {
     var movie = $("#searchItem").val();
     document.getElementById("searchItem").val = "";
     document.getElementById("ulBibliotek").innerHTML = "";
+    document.getElementById("errorSearch").innerHTML = "";
+    document.getElementById("results").style.display = "none";
 
     if (!movie) {
-        document.getElementById("ulBibliotek").innerHTML = "Enter a movie title to search for";
+        document.getElementById("results").style.display = "block";
+        document.getElementById("errorSearch").innerHTML = "Enter a movie title to search for";
     } else {
         $.get("/searchMovie", {
             movie: movie
         }, function (data) {
             if (!data.movie.length) {
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = "No movies can be found";
             } else {
-                for (var i = 0; i < data.movie.length; i++) {
-                    var movie = data.movie[i];
-                    document.getElementById("ulBibliotek").innerHTML = "<li>" + movie.movie_name + "</li>";
+                var movieList = "<h2>Movie Search Results: </h2>";
+                for (var i = 0; i < data.movies.length; i++) {
+                    var movie = data.movies[i];
+                    movieList += "<li class='movieName'>" + movie.movie_name + "</li>";
                 }
-            }
+                document.getElementById("results").style.display = "block";
+                document.getElementById("ulBibliotek").innerHTML = movieList;
+                }
 
         })
     }
@@ -257,24 +269,31 @@ function getAllAuthors(callback) {
 
 function filterByBook() {
     console.log("filtering Books...");
+    document.getElementById("results").style.display = "none";
+    document.getElementById("errorSearch").innerHTML = "";
 
     var genre_id = $("#genreFilter").val();
-    //console.log(genre_id);
+    var g = document.getElementById("genreFilter");
+    var genre_text = g.options[g.selectedIndex].text;
+    setSelectedIndex(document.getElementById("newItemGenreFilter"), "Select Genre");
 
     if (!genre_id) {
-        document.getElementById("ulBibliotek").innerHTML = "Choose a Genre to Filter By";
+        document.getElementById("results").style.display = "block";
+        document.getElementById("errorSearch").innerHTML = "Choose a Genre to Filter Books By";
     } else {
         $.get("/filterBooks", {
             genre_id: genre_id
         }, function (data) {
             if (!data.books.length) {
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = "No books can be found in that genre";
             } else {
-                var bookList = "";
+                var bookList = "<h2>Results for " + genre_text + " Books: </h2>";
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
                     bookList += "<li><span class='bookName'>" + book.book_name + " </span> by: " + book.author_name + "</li>";
                 }
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = bookList;
             }
         })
@@ -284,23 +303,29 @@ function filterByBook() {
 
 function filterByMovie() {
     console.log("filtering Movies...");
-
+    document.getElementById("results").style.display = "none";
+    document.getElementById("errorSearch").innerHTML = "";
     var genre_id = $("#genreFilter").val();
-    //console.log(genre_id);
+    var g = document.getElementById("genreFilter");
+    var genre_text = g.options[g.selectedIndex].text;
+    setSelectedIndex(document.getElementById("newItemGenreFilter"), "Select Genre");
     if (!genre_id) {
-        document.getElementById("ulBibliotek").innerHTML = "Choose a Genre to Filter By";
+        document.getElementById("results").style.display = "block";
+        document.getElementById("errorSearch").innerHTML = "Choose a Genre to Filter Movies By";
     } else {
         $.get("/filterMovies", {
             genre_id: genre_id
         }, function (data) {
             if (!data.movies.length) {
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = "No movies can be found in that genre";
             } else {
-                var movieList = "";
+                var movieList = "<h2>Results for " + genre_text + " Movies: </h2>";
                 for (var i = 0; i < data.movies.length; i++) {
                     var movie = data.movies[i];
                     movieList += "<li class='movieName'>" + movie.movie_name + "</li>";
                 }
+                document.getElementById("results").style.display = "block";
                 document.getElementById("ulBibliotek").innerHTML = movieList;
             }
         })
@@ -329,12 +354,17 @@ function addNewItem() {
     console.log("adding item");
     document.getElementById("errorAdd").innerHTML = "";
     document.getElementById("successAdd").innerHTML = "";
-    document.getElementById("newItemName").innerHTML = "";
+
 
     var itemType = $("#addType").val();
     var itemName = $("#newItemName").val();
     var genre_id = $("#newItemGenreFilter").val();
     var series_id = $("#newItemSeriesFilter").val();
+
+    document.getElementById("newItemName").value = "";
+    setSelectedIndex(document.getElementById("newItemGenreFilter"), "Select Genre");
+    setSelectedIndex(document.getElementById("newItemSeriesFilter"), "Select Series");
+
 
     if (!itemName) {
         document.getElementById("errorAdd").innerHTML = "Please enter Item Name";
@@ -348,13 +378,14 @@ function addNewItem() {
                 author_id: author_id,
                 series_id: series_id
             };
+            setSelectedIndex(document.getElementById("newItemAuthorFilter"), "Select Author");
 
             $.post("/addBook", {
                 newBook: newBook
             }, function (data) {
                 console.log(data);
                 if (data.success == true) {
-                    document.getElementById("ulBibliotek").innerHTML = "Book added";
+                    document.getElementById("successAdd").innerHTML = "Book added";
                 }
 
             })
@@ -369,7 +400,7 @@ function addNewItem() {
             }, function (data) {
                 console.log(data);
                 if (data.success == true) {
-                    document.getElementById("ulBibliotek").innerHTML = "Movie added";
+                    document.getElementById("successAdd").innerHTML = "Movie added";
                 }
 
             })
@@ -583,7 +614,7 @@ function modifyBook(book_id, book_name, series_id, genre_id, author_id) {
     var genre_id = genre_id;
     var series_id = series_id;
     var author_id = author_id;
-    
+
     var mods = "<p class='text-center'>" + book_name + "<p>";
     mods += "<label class='col1'>Name</label><textarea rows='1' value= ' id='bookNameUpdate' class='col2'>" + book_name + "</textarea><br>"
     mods += "<label class='col1'>Genre</label> <select id='modBookGenre' class='col2'></select><br>";
@@ -597,11 +628,11 @@ function modifyBook(book_id, book_name, series_id, genre_id, author_id) {
 
 function modifyMovie(movie_id, movie_name, series_id, genre_id) {
 
-     
+
     document.getElementById("hiddenEdit").style.display = "block";
     var genre_id = genre_id;
     var series_id = series_id;
-   
+
     var mods = "<p class='text-center'> " + movie_name + "<p>";
     mods += "<label class='col1'>Name</label><input value= '" + movie_name + "' id='movieNameUpdate' class='col2'><br>"
     mods += "<label class='col1'>Genre</label><select id='modGenre' class='col2'></select><br>";

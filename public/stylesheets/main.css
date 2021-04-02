@@ -11,14 +11,14 @@ html {
 }
 
 body {
-    border: 10px solid #403333;
+    border: 10px solid #263E59;
     width: 100%;
     margin: 0;
     min-width: 360px;
     min-height: 100vh;
     padding-bottom: 50px;
-    background-color: #D9D7D7;
-    color: #403333;
+    background-color: #C0D6Df;
+    color: #263E59;
 }
 
 .container {
@@ -30,29 +30,37 @@ body {
 h1 {
     font-family: 'Henny Penny', cursive;
     font-size: 3.5rem;
-    color: #736463;
-    margin-bottom: 0;
+  
     margin-top: 1rem;
     padding-top: 1rem;
 }
 
-h2 {
+#tagLine {
     margin-top: 0;
-    font-weight: 500;
-    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
 }
 
-h1, h2, h3 {
+textarea{
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+h2{
+    font-size: 1.4rem;
+}
+
+h1, h2  {
     text-align: center;
 }
 
 label {
-    color: #403333;
+
     font-weight: 500;
     font-size: 1.1rem;
 }
 
-input, select {
+input, select{
     margin-top: 10px;
     margin-bottom: 10px;
     width: 75%;
@@ -82,17 +90,16 @@ input, select {
 }
 
 .nameInput{
-    resize: vertical;
-  overflow: auto;
+    margin-right: 5px;
 }
-
 .bookName, .movieName, .viewAllLabel{
     font-weight: bold;
 }
 
+
 button {
-    background-color: #403333;
-    color: #D9D7D7;
+    background-color: #263E59;
+    color: #C0D6Df;
     outline: none;
     border: none;
     padding: 5px 7px;
@@ -100,17 +107,20 @@ button {
 }
 
 button:hover {
-    background-color: #8C7D7B;
+    background-color: #6E8898;
+    color: #C0D6Df;
+    font-weight: bold;
 }
 
 button:active {
-    background-color: #8C7D7B;
+    background-color:  #263E59;
+    color: #C0D6Df;
     box-shadow: 0 3px #666;
     transform: translateY(4px);
 }
 
-#searchDiv, #results, #modifyDiv, #viewAll {
-    border-bottom: 3px solid #403333;
+#searchDiv, #results, #modifyDiv, #viewAll, #tagLine {
+    border-bottom: 3px solid #263E59;
     margin-bottom: 20px;
     padding-bottom: 20px;
 }
@@ -120,17 +130,24 @@ button:active {
     margin-left: 15px;
 }
 
-#errorAdd, #errorMod {
-    color: red;
+#errorAdd, #errorMod, #errorSearch {
+    color: #d3463c;
+    font-weight: bold;
     text-align: center;
 }
 
-#hiddenGenre, #hiddenSeries, #hiddenNewAuthor, #hiddenEdit, #ulModify {
+#successAdd, #successMod {
+    color: #14684b;
+    text-align: center;
+    font-weight: bold;
+}
+
+#hiddenGenre, #hiddenSeries, #hiddenNewAuthor, #hiddenEdit, #ulModify, #results {
     display: none;
 }
 
 #hiddenGenre, #hiddenSeries, #hiddenNewAuthor {
-    border: 1px solid #403333;
+    border: 1px solid #263E59;
     padding: 10px
 }
 
@@ -141,6 +158,7 @@ button:active {
 #ulBibliotek{
     list-style:none;
     padding-left:0;
+    text-align: center;
 }
 
 #ulBibliotek li::before{
