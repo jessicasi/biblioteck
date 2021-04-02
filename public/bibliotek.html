@@ -61,26 +61,32 @@
       </div>
 
       <label class="col1">Genre</label>
-      <select class="col2" id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
-      <div id="hiddenGenre">
+      <select class="col2 " id="newItemGenreFilter" onchange="showNewGenre('hiddenGenre', this)"></select>
+      <div id="hiddenGenre" >
         <p class="newAdds">New Genre</p>
+        <div class="d-flex justify-content-center">
         <input type="text" id="addNewGenre" placeholder="New Genre">
-        <button onclick="newGenre()">Add</button>
+        <button class="button-left"  onclick="newGenre()">Add</button>
+        </div>
       </div><br>
       <label class="col1">Series</label>
       <select class="col2" id="newItemSeriesFilter" onchange="showNewSeries('hiddenSeries', this)"></select><br>
       <div id="hiddenSeries">
         <p class="newAdds">New Series</p>
+        <div class="d-flex justify-content-center">
         <input type="text" id="addNewSeries" placeholder="Series Name">
-        <button onclick="newSeries()">Add</button>
+        <button class="button-left add-button"  onclick="newSeries()">Add</button>
+        </div>
       </div>
       <div id="hiddenAuthor">
         <label class="col1">Author</label>
         <select class="col2" id="newItemAuthorFilter" onchange="showNewAuthor('hiddenNewAuthor', this)"></select>
         <div id="hiddenNewAuthor">
           <p class="newAdds">New Author</p>
+          <div class="d-flex justify-content-center">
           <input type="text" id="addNewAuthor" placeholder="Author Name">
-          <button onclick="newAuthor()">Add</button>
+          <button class="button-left"  onclick="newAuthor()">Add</button>
+          </div>
         </div>
 
       </div>

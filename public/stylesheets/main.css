@@ -119,6 +119,7 @@ button:active {
     transform: translateY(4px);
 }
 
+
 #searchDiv, #results, #modifyDiv, #viewAll, #tagLine {
     border-bottom: 3px solid #263E59;
     margin-bottom: 20px;
@@ -148,7 +149,7 @@ button:active {
 
 #hiddenGenre, #hiddenSeries, #hiddenNewAuthor {
     border: 1px solid #263E59;
-    padding: 10px
+    padding: 10px;
 }
 
 #hiddenNewAuthor {
