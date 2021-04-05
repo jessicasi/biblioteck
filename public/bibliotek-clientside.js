@@ -536,11 +536,11 @@ function viewAll() {
                 for (var i = 0; i < data.books.length; i++) {
                     var book = data.books[i];
 
-                    bookList += "<p class='d-flex justify-content-center'><span class='viewAllLabel'> Name:</span>  " + book.book_name + "</p><p class='d-flex justify-content-center'><span class='viewAllLabel'> By: </span>" + book.author_name + "</p>";
+                    bookList += "<p class='text-center'><span class='viewAllLabel'> Name: </span>" + book.book_name + "</p><p class='text-center'><span class='viewAllLabel'> By: </span>" + book.author_name + "</p>";
                     if (book.series_id != 21) {
-                        bookList += "<p class='d-flex justify-content-center'><span class='viewAllLabel'> Series: </span>" + book.series_name + "</p>";
+                        bookList += "<p class='text-center'><span class='viewAllLabel'> Series: </span>" + book.series_name + "</p>";
                     }
-                    bookList += "<p class='d-flex justify-content-center'><a href='#hiddenEdit'><button onclick=\"modifyBook(" + book.book_id + "," + "'" + book.book_name + "'" + "," + book.series_id + "," + book.genre_id + "," + book.author_id + ")\">Modify</button></a></p><hr>"
+                    bookList += "<p class='text-center'><a href='#hiddenEdit'><button onclick=\"modifyBook(" + book.book_id + "," + "'" + book.book_name + "'" + "," + book.series_id + "," + book.genre_id + "," + book.author_id + ")\">Modify</button></a></p><hr>"
                 }
                 document.getElementById("viewResults").innerHTML = bookList;
 
@@ -551,11 +551,11 @@ function viewAll() {
                 var movieList = "<h2>Movies</h2>";
                 for (var i = 0; i < data.movies.length; i++) {
                     var movie = data.movies[i];
-                    movieList += "<p class='d-flex justify-content-center'><span class='viewAllLabel'> Name: </span>" + movie.movie_name + "</p>";
+                    movieList += "<p class='text-center'><span class='viewAllLabel'> Name: </span>" + movie.movie_name + "</p>";
                     if (movie.series_id != 21) {
-                        movieList += " <p class='d-flex justify-content-center'><span class='viewAllLabel'>Series: </span>" + movie.series_name + "</p>";
+                        movieList += " <p class='text-center'><span class='viewAllLabel'>Series: </span>" + movie.series_name + "</p>";
                     }
-                    movieList += "<p class='d-flex justify-content-center'><a href='#hiddenEdit'><button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + movie.genre_id + ")\">Modify</button></a></p><hr>"
+                    movieList += "<p class='text-center'><a href='#hiddenEdit'><button onclick=\"modifyMovie(" + movie.movie_id + "," + "'" + movie.movie_name + "'" + "," + movie.series_id + "," + movie.genre_id + ")\">Modify</button></a></p><hr>"
                 }
 
                 document.getElementById("viewResults").innerHTML = movieList;
@@ -569,7 +569,7 @@ function viewAll() {
                 for (var i = 0; i < data.genres.length; i++) {
                     var genre = data.genres[i];
 
-                    genreList += "<p class='d-flex justify-content-center'>" + genre.genre_name + "</p><p class='d-flex justify-content-center'><a href='#hiddenEdit'><button onclick=\"modify(" + genre.genre_id + "," + type + "," + "'" + genre.genre_name + "'" + ")\">Modify</button></a></p><hr>";
+                    genreList += "<p class='text-center'>" + genre.genre_name + "</p><p class='text-center'><a href='#hiddenEdit'><button onclick=\"modify(" + genre.genre_id + "," + type + "," + "'" + genre.genre_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
 
                 document.getElementById("viewResults").innerHTML = genreList;
@@ -583,7 +583,7 @@ function viewAll() {
                 for (var i = 0; i < data.series.length; i++) {
                     var series = data.series[i];
 
-                    seriesList += "<p class='d-flex justify-content-center'>" + series.series_name + "</p> <p class='d-flex justify-content-center'> <a href='#hiddenEdit'><button onclick=\"modify(" + series.series_id + "," + type + "," + "'" + series.series_name + "'" + ")\">Modify</button></a></p><hr>";
+                    seriesList += "<p class='text-center'>" + series.series_name + "</p> <p class='text-center'> <a href='#hiddenEdit'><button onclick=\"modify(" + series.series_id + "," + type + "," + "'" + series.series_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
 
                 document.getElementById("viewResults").innerHTML = seriesList;
@@ -597,7 +597,7 @@ function viewAll() {
                 for (var i = 0; i < data.authors.length; i++) {
                     var authors = data.authors[i];
 
-                    authorsList += "<p class='d-flex justify-content-center'>" + authors.author_name + "</p><p class='d-flex justify-content-center'><a href='#hiddenEdit'><button onclick=\"modify(" + authors.author_id + "," + type + "," + "'" + authors.author_name + "'" + ")\">Modify</button></a></p><hr>";
+                    authorsList += "<p class='text-center'>" + authors.author_name + "</p><p class='text-center'><a href='#hiddenEdit'><button onclick=\"modify(" + authors.author_id + "," + type + "," + "'" + authors.author_name + "'" + ")\">Modify</button></a></p><hr>";
                 }
                 document.getElementById("viewResults").innerHTML = authorsList;
 
