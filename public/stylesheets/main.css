@@ -94,6 +94,10 @@ hr:last-of-type{
     width: 70%;
 }
 
+.filtering{
+    margin-bottom: 15px;
+}
+
 .nameInput{
     margin-right: 5px;
 }
