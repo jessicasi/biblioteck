@@ -93,7 +93,6 @@ function modifyBookDropDowns(genre_id, series_id, author_id, callback) {
         var results = "<option disabled> Select Genre </option>";
         for (var i = 0; i < data.genres.length; i++) {
             var genre = data.genres[i];
-            //console.log("cycle through genre.genre_id: " + genre.genre_id + " genre name: " + genre.genre_name);
 
             if (genre.genre_id == genre_id) {
                 // console.log("this one matches");
