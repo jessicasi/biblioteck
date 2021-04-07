@@ -200,8 +200,8 @@ function searchByMovie() {
                 document.getElementById("ulBibliotek").innerHTML = "No movies can be found";
             } else {
                 var movieList = "<h2>Movie Search Results: </h2>";
-                for (var i = 0; i < data.movies.length; i++) {
-                    var movie = data.movies[i];
+                for (var i = 0; i < data.movie.length; i++) {
+                    var movie = data.movie[i];
                     movieList += "<li class='movieName'>" + movie.movie_name + "</li>";
                 }
                 document.getElementById("results").style.display = "block";
